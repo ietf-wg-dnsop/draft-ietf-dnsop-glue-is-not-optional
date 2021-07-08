@@ -7,9 +7,11 @@ DNSOP                                                         M. Andrews
 Internet-Draft                                                       ISC
 Updates: 1034 (if approved)                                     S. Huque
 Intended status: Standards Track                              Salesforce
-Expires: 8 January 2022                                       P. Wouters
+Expires: 9 January 2022                                       P. Wouters
                                                                    Aiven
-                                                             7 July 2021
+                                                              D. Wessels
+                                                                Verisign
+                                                             8 July 2021
 
 
              Glue In DNS Referral Responses Is Not Optional
@@ -39,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 January 2022.
+   This Internet-Draft will expire on 9 January 2022.
 
 Copyright Notice
 
@@ -49,16 +51,16 @@ Copyright Notice
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents (https://trustee.ietf.org/
    license-info) in effect on the date of publication of this document.
-   Please review these documents carefully, as they describe your rights
-   and restrictions with respect to this document.  Code Components
 
 
 
-Andrews, et al.          Expires 8 January 2022                 [Page 1]
+Andrews, et al.          Expires 9 January 2022                 [Page 1]
 
 Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
 
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
    extracted from this document must include Simplified BSD License text
    as described in Section 4.e of the Trust Legal Provisions and are
    provided without warranty as described in the Simplified BSD License.
@@ -108,9 +110,7 @@ Table of Contents
 
 
 
-
-
-Andrews, et al.          Expires 8 January 2022                 [Page 2]
+Andrews, et al.          Expires 9 January 2022                 [Page 2]
 
 Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
@@ -166,7 +166,7 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
 
 
-Andrews, et al.          Expires 8 January 2022                 [Page 3]
+Andrews, et al.          Expires 9 January 2022                 [Page 3]
 
 Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
@@ -222,7 +222,7 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
 
 
-Andrews, et al.          Expires 8 January 2022                 [Page 4]
+Andrews, et al.          Expires 9 January 2022                 [Page 4]
 
 Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
@@ -278,5 +278,61 @@ Authors' Addresses
 
 
 
-Andrews, et al.          Expires 8 January 2022                 [Page 5]
+Andrews, et al.          Expires 9 January 2022                 [Page 5]
+
+Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
+
+
+   Duane Wessels
+   Verisign
+
+   Email: dwessels@verisign.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Andrews, et al.          Expires 9 January 2022                 [Page 6]
 ```

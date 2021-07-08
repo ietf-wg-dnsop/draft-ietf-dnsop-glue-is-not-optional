@@ -53,6 +53,20 @@ coding = "utf-8"
   [author.address]
     email = "paul.wouters@aiven.io"
 
+[[author]]
+  initials = "D."
+  surname = "Wessels"
+  fullname = "Duane Wessels"
+  organization = "Verisign"
+  street = "12061 Bluemont Way"
+  city = "Reston"
+  region = "VA"
+  code = "20190"
+  country = "US"
+  [author.address]
+    email = "dwessels@verisign.com"
+
+
 %%%
 
 .# Abstract
