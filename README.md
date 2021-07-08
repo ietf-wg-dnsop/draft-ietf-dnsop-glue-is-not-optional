@@ -5,13 +5,15 @@
 
 DNSOP                                                         M. Andrews
 Internet-Draft                                                       ISC
-Obsoletes: 1034 (if approved)                                8 June 2021
-Intended status: Standards Track                                        
-Expires: 10 December 2021
+Updates: 1034 (if approved)                                     S. Huque
+Intended status: Standards Track                              Salesforce
+Expires: 8 January 2022                                       P. Wouters
+                                                                   Aiven
+                                                             7 July 2021
 
 
              Glue In DNS Referral Responses Is Not Optional
-                draft-ietf-dnsop-glue-is-not-optional-00
+                draft-ietf-dnsop-glue-is-not-optional-01
 
 Abstract
 
@@ -37,33 +39,26 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 December 2021.
+   This Internet-Draft will expire on 8 January 2022.
 
 Copyright Notice
 
    Copyright (c) 2021 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
-
-
-
-
-
-
-
-
-
-
-Andrews                 Expires 10 December 2021                [Page 1]
-
-Internet-Draft  Glue In DNS Referral Responses Is Not Op       June 2021
-
-
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents (https://trustee.ietf.org/
    license-info) in effect on the date of publication of this document.
    Please review these documents carefully, as they describe your rights
    and restrictions with respect to this document.  Code Components
+
+
+
+Andrews, et al.          Expires 8 January 2022                 [Page 1]
+
+Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
+
+
    extracted from this document must include Simplified BSD License text
    as described in Section 4.e of the Trust Legal Provisions and are
    provided without warranty as described in the Simplified BSD License.
@@ -77,25 +72,28 @@ Table of Contents
    4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   4
    5.  Normative References  . . . . . . . . . . . . . . . . . . . .   4
    6.  Informative References  . . . . . . . . . . . . . . . . . . .   4
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   5
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   5
 
 1.  Introduction
 
-   The DNS [RFC1034], [RFC1035] uses glue records to allow iterative
-   clients to find the addresses of nameservers that live within the
-   delegated zone.  Glue records are expected to be returned as part of
-   a referral and if they cannot be fitted into the UDP response, TC=1
-   MUST be set to inform the client that the response is incomplete and
-   that TCP SHOULD be used to retrieve the full response.
+   The Domain Name System (DNS) [RFC1034], [RFC1035] uses glue records
+   to allow iterative clients to find the addresses of nameservers that
+   live within the delegated zone.  Glue records are expected to be
+   returned as part of a referral and if they cannot be fitted into the
+   UDP response, TC=1 MUST be set to inform the client that the response
+   is incomplete and that TCP SHOULD be used to retrieve the full
+   response.
 
    While not common, real life examples of servers that fail to set TC=1
    when glue records are available exist and they do cause resolution
-   failures.  The example below shows a case where none of the glue
-   records, present in the zone, fitted into the available space and
-   TC=1 was not set in the response.  While this example shows an DNSSEC
-   [RFC4033], [RFC4034], [RFC4035] referral response, this behaviour has
-   also been seen with plain DNS responses as well.  The records have
-   been truncated for display purposes.
+   failures.  The example below from June 2020 shows a case where none
+   of the glue records, present in the zone, fitted into the available
+   space and TC=1 was not set in the response.  While this example shows
+   an DNSSEC [RFC4033], [RFC4034], [RFC4035] referral response, this
+   behaviour has also been seen with plain DNS responses as well.  The
+   records have been truncated for display purposes.  Note that at the
+   time of this writing, this configuration has been corrected and the
+   response correctly sets the TC=1 flag.
 
 
 
@@ -110,9 +108,11 @@ Table of Contents
 
 
 
-Andrews                 Expires 10 December 2021                [Page 2]
+
+
+Andrews, et al.          Expires 8 January 2022                 [Page 2]
 
-Internet-Draft  Glue In DNS Referral Responses Is Not Op       June 2021
+Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
 
       % dig +norec +dnssec +bufsize=512 +ignore @a.gov-servers.net \
@@ -149,12 +149,10 @@ Internet-Draft  Glue In DNS Referral Responses Is Not Op       June 2021
 
       %
 
-   This is almost certainly due a wide spread misbelief that all
-   additional section records are optional.  This has never been the
-   case with respect to glue records and later protocol extension have
-   added more cases where records in the additional section are not
-   optional in the response.  This includes TSIG [RFC2845], OPT
-   [RFC6891], and SIG(0) [RFC2931].
+   DNS responses sometimes contain optional data in the additional
+   section.  Glue records however are not optional.  Several other
+   protocol extensions, when used, are also not optional.  This includes
+   TSIG [RFC2845], OPT [RFC6891], and SIG(0) [RFC2931].
 
    Glue records are added to the parent zone as part of the delegation
    process.  They are expected to be returned as part of a referral and
@@ -166,9 +164,11 @@ Internet-Draft  Glue In DNS Referral Responses Is Not Op       June 2021
 
 
 
-Andrews                 Expires 10 December 2021                [Page 3]
+
+
+Andrews, et al.          Expires 8 January 2022                 [Page 3]
 
-Internet-Draft  Glue In DNS Referral Responses Is Not Op       June 2021
+Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
 
 1.1.  Reserved Words
@@ -196,8 +196,8 @@ Internet-Draft  Glue In DNS Referral Responses Is Not Op       June 2021
 
 3.  Security Considerations
 
-   This document reinforces DNS server behaviour expectations and does
-   not introduce new security considerations.
+   This document reinforces correct DNS server behaviour expectations
+   and does not introduce new security considerations.
 
 4.  IANA Considerations
 
@@ -222,9 +222,9 @@ Internet-Draft  Glue In DNS Referral Responses Is Not Op       June 2021
 
 
 
-Andrews                 Expires 10 December 2021                [Page 4]
+Andrews, et al.          Expires 8 January 2022                 [Page 4]
 
-Internet-Draft  Glue In DNS Referral Responses Is Not Op       June 2021
+Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
 
    [RFC2845]  Vixie, P., Gudmundsson, O., Eastlake 3rd, D., and B.
@@ -256,7 +256,7 @@ Internet-Draft  Glue In DNS Referral Responses Is Not Op       June 2021
               DOI 10.17487/RFC6891, April 2013,
               <https://www.rfc-editor.org/info/rfc6891>.
 
-Author's Address
+Authors' Addresses
 
    M. Andrews
    ISC
@@ -264,19 +264,19 @@ Author's Address
    Email: marka@isc.org
 
 
+   Shumon Huque
+   Salesforce
+
+   Email: shuque@gmail.com
+
+
+   Paul Wouters
+   Aiven
+
+   Email: paul.wouters@aiven.io
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-Andrews                 Expires 10 December 2021                [Page 5]
+Andrews, et al.          Expires 8 January 2022                 [Page 5]
 ```
