@@ -72,7 +72,7 @@ coding = "utf-8"
 .# Abstract
 
    The DNS uses glue records to allow iterative clients to find the
-   addresses of nameservers that live within the delegated zone.  Glue
+   addresses of nameservers that are contained within the delegated zone.  Glue
    records are expected to be returned as part of a referral and if they
    cannot be fitted into the UDP response, TC=1 MUST be set to inform
    the client that the response is incomplete and that TCP SHOULD be
@@ -84,7 +84,7 @@ coding = "utf-8"
 # Introduction
 
    The Domain Name System (DNS) [@!RFC1034], [@!RFC1035] uses glue records
-   to allow iterative clients to find the addresses of nameservers that live
+   to allow iterative clients to find the addresses of nameservers that are contained
    within the delegated zone.  Glue records are expected to be returned as
    part of a referral and if they cannot be fitted into the UDP response,
    TC=1 MUST be set to inform the client that the response is incomplete and
