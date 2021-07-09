@@ -2,7 +2,7 @@
 title = "Glue In DNS Referral Responses Is Not Optional"
 docName = "@DOCNAME@"
 category = "std"
-obsoletes = [1034]
+updates = [1034]
 ipr = "trust200902"
 area = "Operations"
 workgroup = "DNSOP"
@@ -11,14 +11,14 @@ keyword = [""]
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "draft-ietf-dnsop-glue-is-not-optional-00"
+value = "draft-ietf-dnsop-glue-is-not-optional-01"
 stream = "IETF"
 status = "standard"
 
 coding = "utf-8"
 
 [[author]]
-  initals = "M."
+  initials = "M."
   surname = "Andrews"
   fullname = "M. Andrews"
   organization = "ISC"
@@ -29,6 +29,43 @@ coding = "utf-8"
   country = "US"
   [author.address] 
     email = "marka@isc.org"
+
+[[author]]
+  initials = "S."
+  surname = "Huque"
+  fullname = "Shumon Huque"
+  organization = "Salesforce"
+  street = "415 Mission Street, 3rd Floor"
+  city = "San Francisco"
+  region = "CA"
+  code = "94105"
+  country = "US"
+  [author.address]
+    email = "shuque@gmail.com"
+
+[[author]]
+  initials = "P."
+  surname = "Wouters"
+  fullname = "Paul Wouters"
+  organization = "Aiven"
+  city = "Toronto"
+  country = "CA"
+  [author.address]
+    email = "paul.wouters@aiven.io"
+
+[[author]]
+  initials = "D."
+  surname = "Wessels"
+  fullname = "Duane Wessels"
+  organization = "Verisign"
+  street = "12061 Bluemont Way"
+  city = "Reston"
+  region = "VA"
+  code = "20190"
+  country = "US"
+  [author.address]
+    email = "dwessels@verisign.com"
+
 
 %%%
 
@@ -46,21 +83,23 @@ coding = "utf-8"
 
 # Introduction
 
-   The DNS [@!RFC1034], [@!RFC1035] uses glue records to allow iterative
-   clients to find the addresses of nameservers that live within the
-   delegated zone.  Glue records are expected to be returned as part of
-   a referral and if they cannot be fitted into the UDP response, TC=1
-   MUST be set to inform the client that the response is incomplete and
+   The Domain Name System (DNS) [@!RFC1034], [@!RFC1035] uses glue records
+   to allow iterative clients to find the addresses of nameservers that live
+   within the delegated zone.  Glue records are expected to be returned as
+   part of a referral and if they cannot be fitted into the UDP response,
+   TC=1 MUST be set to inform the client that the response is incomplete and
    that TCP SHOULD be used to retrieve the full response.
 
    While not common, real life examples of servers that fail to set TC=1
    when glue records are available exist and they do cause resolution
-   failures.  The example below shows a case where none of the glue
-   records, present in the zone, fitted into the available space and
+   failures.  The example below from June 2020 shows a case where none of
+   the glue records, present in the zone, fitted into the available space and
    TC=1 was not set in the response.  While this example shows an DNSSEC
    [@RFC4033], [@RFC4034], [@RFC4035] referral response, this behaviour has
    also been seen with plain DNS responses as well.  The records have
-   been truncated for display purposes.
+   been truncated for display purposes. Note that at the time of this
+   writing, this configuration has been corrected and the response correctly
+   sets the TC=1 flag.
 
 ~~~
    % dig +norec +dnssec +bufsize=512 +ignore @a.gov-servers.net \
@@ -98,12 +137,10 @@ coding = "utf-8"
    %
 ~~~
 
-   This is almost certainly due a wide spread misbelief that all
-   additional section records are optional.  This has never been the
-   case with respect to glue records and later protocol extension have
-   added more cases where records in the additional section are not
-   optional in the response.  This includes TSIG [@RFC2845], OPT
-   [@RFC6891], and SIG(0) [@RFC2931].
+   DNS responses sometimes contain optional data in the additional
+   section. Glue records however are not optional. Several other
+   protocol extensions, when used, are also not optional. This
+   includes TSIG [@RFC2845], OPT [@RFC6891], and SIG(0) [@RFC2931].
 
    Glue records are added to the parent zone as part of the delegation
    process.  They are expected to be returned as part of a referral and
@@ -136,8 +173,8 @@ coding = "utf-8"
 
 #   Security Considerations
 
-   This document reinforces DNS server behaviour expectations and does
-   not introduce new security considerations.
+   This document reinforces correct DNS server behaviour expectations and
+   does not introduce new security considerations.
 
 #   IANA Considerations
 
@@ -147,7 +184,3 @@ coding = "utf-8"
 
 
 {numbered="false"}
-
-
-
-
