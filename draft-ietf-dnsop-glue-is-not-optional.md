@@ -145,7 +145,7 @@ coding = "utf-8"
    Glue records are added to the parent zone as part of the delegation
    process.  They are expected to be returned as part of a referral and
    if they can't fit in a UDP response TC=1 MUST be set to signal to the
-   client to retry over TCP.  This document reinforces that expectation.
+   client to retry over TCP.  This document clarifies that expectation.
 
 
 ## Reserved Words
@@ -173,7 +173,7 @@ coding = "utf-8"
 
 #   Security Considerations
 
-   This document reinforces correct DNS server behaviour expectations and
+   This document clarifies correct DNS server behaviour expectations and
    does not introduce new security considerations.
 
 #   IANA Considerations
