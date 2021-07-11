@@ -72,11 +72,12 @@ coding = "utf-8"
 .# Abstract
 
    The DNS uses glue records to allow iterative clients to find the
-   addresses of nameservers that live within the delegated zone.  Glue
-   records are expected to be returned as part of a referral and if they
-   cannot be fitted into the UDP response, TC=1 MUST be set to inform
-   the client that the response is incomplete and that TCP SHOULD be
-   used to retrieve the full response.
+   addresses of nameservers that are contained within a delegated zone.  Servers
+   are expected to return available glue records in referrals. If message size
+   constraints prevent the inclusion of glue records in a UDP response,
+   the server MUST set the TC flag to inform
+   the client that the response is incomplete, and that the client SHOULD use TCP
+   to retrieve the full response.
 
 {mainmatter}
 
@@ -84,11 +85,14 @@ coding = "utf-8"
 # Introduction
 
    The Domain Name System (DNS) [@!RFC1034], [@!RFC1035] uses glue records
-   to allow iterative clients to find the addresses of nameservers that live
-   within the delegated zone.  Glue records are expected to be returned as
-   part of a referral and if they cannot be fitted into the UDP response,
-   TC=1 MUST be set to inform the client that the response is incomplete and
-   that TCP SHOULD be used to retrieve the full response.
+   to allow iterative clients to find the addresses of nameservers that are contained
+   within a delegated zone. Servers 
+   are expected to return available glue records in referrals. If message size
+   constraints prevent the inclusion of glue records in a UDP response, 
+   the server MUST set the TC flag to inform
+   the client that the response is incomplete, and that the client SHOULD use TCP 
+   to retrieve the full response.
+
 
    While not common, real life examples of servers that fail to set TC=1
    when glue records are available exist and they do cause resolution
@@ -142,10 +146,15 @@ coding = "utf-8"
    protocol extensions, when used, are also not optional. This
    includes TSIG [@RFC2845], OPT [@RFC6891], and SIG(0) [@RFC2931].
 
+   %%% third time the bulk of this paragraph is repated
    Glue records are added to the parent zone as part of the delegation
-   process.  They are expected to be returned as part of a referral and
-   if they can't fit in a UDP response TC=1 MUST be set to signal to the
-   client to retry over TCP.  This document reinforces that expectation.
+   process for a domain whose nameservers are contained within the domain itself.
+   Servers are expected to return available glue records in referrals.
+   If message size constraints prevent the inclusion of glue records in
+   a UDP response, the server MUST set the TC flag to inform the client
+   that the response is incomplete, and that the client SHOULD use TCP
+   to retrieve the full response.
+   This document clarifies that expectation.
 
 
 ## Reserved Words
@@ -173,7 +182,7 @@ coding = "utf-8"
 
 #   Security Considerations
 
-   This document reinforces correct DNS server behaviour expectations and
+   This document clarifies correct DNS server behaviour expectations and
    does not introduce new security considerations.
 
 #   IANA Considerations
