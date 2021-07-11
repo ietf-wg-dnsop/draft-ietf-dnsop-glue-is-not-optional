@@ -94,9 +94,39 @@ coding = "utf-8"
    the client SHOULD use TCP to retrieve the full response. This document
    clarifies that expectation.
 
+
+## Reserved Words
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in [@!RFC2119].
+
+#   Clarifying modifications to RFC1034
+
+   Replace
+
+   "Copy the NS RRs for the subzone into the authority section of the
+   reply.  Put whatever addresses are available into the additional
+   section, using glue RRs if the addresses are not available from
+   authoritative data or the cache.  Go to step 4."
+
+   with
+
+   "Copy the NS RRs for the subzone into the authority section of the
+   reply.  Put whatever addresses are available into the additional
+   section, using glue RRs if the addresses are not available from
+   authoritative data or the cache.  If glue RRs do not fit set TC=1 in
+   the header.  Go to step 4."
+
+# Why glue is required
+
    While not common, real life examples of servers that fail to set TC=1
    when glue records are available exist and they do cause resolution
-   failures.  The example below from June 2020 shows a case where none of
+   failures.
+
+## Example one: Missing glue
+
+   The example below from June 2020 shows a case where none of
    the glue records, present in the zone, fitted into the available space and
    TC=1 was not set in the response.  While this example shows an DNSSEC
    [@RFC4033], [@RFC4034], [@RFC4035] referral response, this behaviour has
@@ -146,33 +176,38 @@ coding = "utf-8"
    protocol extensions, when used, are also not optional. This
    includes TSIG [@RFC2845], OPT [@RFC6891], and SIG(0) [@RFC2931].
 
-## Reserved Words
+##  Example two: sibling glue
 
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-   document are to be interpreted as described in [@!RFC2119].
+   A zone's sibling glue is glue in another zone that is required for proper resolving.
+   While the example below is obvious, real life examples can be more complex and not obvious.
 
-#   Modifications to RFC1034
+~~~
+   example.com.               86400   IN NS      ns1.example.net.
+   example.com.               86400   IN NS      ns2.example.net.
+   ns1.example.com.           86400   IN A       192.0.1.1
+   ns2.example.com.           86400   IN A       192.0.1.2
 
-   Replace
+   example.net.               86400   IN NS      ns1.example.com.
+   example.net.               86400   IN NS      ns2.example.com.
+   ns1.example.net.           86400   IN A       198.51.100.1
+   ns2.example.net.           86400   IN A       198.51.100.2
+~~~
 
-   "Copy the NS RRs for the subzone into the authority section of the
-   reply.  Put whatever addresses are available into the additional
-   section, using glue RRs if the addresses are not available from
-   authoritative data or the cache.  Go to step 4."
+   This situation is harder to detect if the sibling zones are nog hosted on the same nameservers.
 
-   with
+##  Promoted (or orphaned) glue
 
-   "Copy the NS RRs for the subzone into the authority section of the
-   reply.  Put whatever addresses are available into the additional
-   section, using glue RRs if the addresses are not available from
-   authoritative data or the cache.  If glue RRs do not fit set TC=1 in
-   the header.  Go to step 4."
+   When a zone is deleted but the parent notices that its NS glue records
+   are required for other zones, it MAY opt to take these (now orphaned)
+   glue records into its own zone to ensure that other zones depending
+   on this glue are not broken. Technically, these NS records are no
+   longer glue records, but authorative data of the parent zone, and
+   should be added to the DNS response similarly to regular glue records.
 
 #   Security Considerations
 
-   This document clarifies correct DNS server behaviour expectations and
-   does not introduce new security considerations.
+   This document clarifies correct DNS server behaviour and does not introduce
+   any changes or new security considerations.
 
 #   IANA Considerations
 
