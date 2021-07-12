@@ -115,7 +115,7 @@ coding = "utf-8"
    "Copy the NS RRs for the subzone into the authority section of the
    reply.  Put whatever addresses are available into the additional
    section, using glue RRs if the addresses are not available from
-   authoritative data or the cache.  If glue RRs do not fit set TC=1 in
+   authoritative data or the cache.  If glue RRs do not fit, set TC=1 in
    the header.  Go to step 4."
 
 # Why glue is required
@@ -176,10 +176,53 @@ coding = "utf-8"
    protocol extensions, when used, are also not optional. This
    includes TSIG [@RFC2845], OPT [@RFC6891], and SIG(0) [@RFC2931].
 
-##  Example two: sibling glue
+##  Example two: Sibling Glue from the same delegating zone
 
-   A zone's sibling glue is glue in another zone that is required for proper resolving.
-   While the example below is obvious, real life examples can be more complex and not obvious.
+   Sibling glue are glue records that are not contained in the delegating
+   zone itself, but in another delegated zone. In many cases, these are not
+   strictly required for resolution, since the resolver can make follow-on
+   queries to the same zone to resolve the nameserver addresses after
+   following the referral to the sibling zone. However, most nameserver
+   implementations provide them as an optimization to obviate the need
+   for extra traffic.
+
+~~~
+Here the delegating zone "test" contains 2 delegations for the
+subzones "bar.test" and "foo.test". The nameservers for "foo.test"
+consist of sibling glue for "bar.test" (ns1.bar.test and ns2.bar.test).
+
+      bar.test.                  86400   IN NS      ns1.bar.test.
+      bar.test.                  86400   IN NS      ns2.bar.test.
+      ns1.bar.test.              86400   IN A       192.0.1.1
+      ns2.bar.test.              86400   IN A       192.0.1.2
+
+      foo.test.                  86400   IN NS      ns1.bar.test.
+      foo.test.                  86400   IN NS      ns2.bar.test.
+
+Referral responses from test for foo.test should include the sibling
+glue:
+
+   ;; QUESTION SECTION:
+   ;www.foo.test.  	IN	A
+
+   ;; AUTHORITY SECTION:
+   foo.test.               86400	IN	NS	ns1.bar.test.
+   foo.test.               86400	IN	NS	ns2.bar.test.
+
+   ;; ADDITIONAL SECTION:
+   ns1.bar.test.           86400	IN	A	192.0.1.1
+   ns2.bar.test.           86400	IN	A	192.0.1.2
+
+~~~
+
+Question: if sibling glue from the same delegating zone does not fit into
+the response, should we also recommend or require that TC=1 be set?
+
+##  Example three: Cross Zone Sibling Glue
+
+   Here is a more complex example of sibling glue that lives in
+   another zone, but is required to resolve a circular dependency in
+   the zone configuration.
 
 ~~~
    example.com.               86400   IN NS      ns1.example.net.
@@ -193,15 +236,13 @@ coding = "utf-8"
    ns2.example.net.           86400   IN A       198.51.100.2
 ~~~
 
-   This situation is harder to detect if the sibling zones are nog hosted on the same nameservers.
-
 ##  Promoted (or orphaned) glue
 
    When a zone is deleted but the parent notices that its NS glue records
    are required for other zones, it MAY opt to take these (now orphaned)
    glue records into its own zone to ensure that other zones depending
    on this glue are not broken. Technically, these NS records are no
-   longer glue records, but authorative data of the parent zone, and
+   longer glue records, but authoritative data of the parent zone, and
    should be added to the DNS response similarly to regular glue records.
 
 #   Security Considerations
