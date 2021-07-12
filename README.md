@@ -239,7 +239,7 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
          foo.test.                  86400   IN NS      ns1.bar.test.
          foo.test.                  86400   IN NS      ns2.bar.test.
 
-   Referral responses from test for foo.test will should the sibling
+   Referral responses from test for foo.test should include the sibling
    glue:
 
       ;; QUESTION SECTION:
