@@ -74,7 +74,7 @@ coding = "utf-8"
    The DNS uses glue records to allow iterative clients to find the
    addresses of nameservers that are contained within a delegated zone.  Servers
    are expected to return available glue records in referrals. If message size
-   constraints prevent the inclusion of glue records in a UDP response,
+   constraints prevent the inclusion of all glue records in a UDP response,
    the server MUST set the TC flag to inform
    the client that the response is incomplete, and that the client SHOULD use TCP
    to retrieve the full response.
@@ -88,8 +88,9 @@ coding = "utf-8"
    to allow iterative clients to find the addresses of nameservers that are
    contained within a delegated zone. Glue records are added to the parent
    zone as part of the delegation process. Servers are expected to return
+   all
    available glue records in referrals. If message size constraints prevent
-   the inclusion of glue records in a UDP response, the server MUST set the
+   the inclusion of all glue records in a UDP response, the server MUST set the
    TC flag to inform the client that the response is incomplete, and that
    the client SHOULD use TCP to retrieve the full response. This document
    clarifies that expectation.
@@ -115,7 +116,7 @@ coding = "utf-8"
    "Copy the NS RRs for the subzone into the authority section of the
    reply.  Put whatever addresses are available into the additional
    section, using glue RRs if the addresses are not available from
-   authoritative data or the cache.  If glue RRs do not fit, set TC=1 in
+   authoritative data or the cache.  If glue all RRs do not fit, set TC=1 in
    the header.  Go to step 4."
 
 # Why glue is required
