@@ -1,7 +1,7 @@
 #
 # built using mmark 2.
 
-VERSION = 01
+VERSION = 02
 DOCNAME = draft-ietf-dnsop-glue-is-not-optional
 
 OUTDIR=adopted-draft-$(VERSION)
