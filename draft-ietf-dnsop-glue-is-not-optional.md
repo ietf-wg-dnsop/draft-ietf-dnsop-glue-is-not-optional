@@ -124,6 +124,9 @@ coding = "utf-8"
    when glue records are available exist and they do cause resolution
    failures.
 
+   *COMMENT DW 20210715: The above doesn't explain why glue is required.
+   Rather it explains why this doc is being written.*
+
 ## Example one: Missing glue
 
    The example below from June 2020 shows a case where none of
@@ -186,6 +189,10 @@ coding = "utf-8"
    implementations provide them as an optimization to obviate the need
    for extra traffic.
 
+   *COMMENT DW 20210715: This example would be better if it showed a
+   cyclic dependency.  As is the foo.test domain can be resolved because
+   bar.test doesn't have any other dependencies.*
+
 ~~~
 Here the delegating zone "test" contains 2 delegations for the
 subzones "bar.test" and "foo.test". The nameservers for "foo.test"
@@ -218,11 +225,16 @@ glue:
 Question: if sibling glue from the same delegating zone does not fit into
 the response, should we also recommend or require that TC=1 be set?
 
+*COMMENT DW 20210715: From today's call I believe we agreed that all
+sibling glue must be included or set TC=1.*
+
 ##  Example three: Cross Zone Sibling Glue
 
    Here is a more complex example of sibling glue that lives in
    another zone, but is required to resolve a circular dependency in
    the zone configuration.
+
+   *COMMENT DW 20210715: IMO this section/example should be removed.*
 
 ~~~
    example.com.               86400   IN NS      ns1.example.net.
@@ -249,6 +261,10 @@ the response, should we also recommend or require that TC=1 be set?
 
    This document clarifies correct DNS server behaviour and does not introduce
    any changes or new security considerations.
+
+   *COMMENT DW 20210715: I think the document should say that some servers might
+   experience an increase in TCP if implementations require all glue or set TC=1.
+   If not in this section then somewhere else.*
 
 #   IANA Considerations
 
