@@ -116,7 +116,7 @@ coding = "utf-8"
    "Copy the NS RRs for the subzone into the authority section of the
    reply.  Put whatever addresses are available into the additional
    section, using glue RRs if the addresses are not available from
-   authoritative data or the cache.  If glue all RRs do not fit, set TC=1 in
+   authoritative data or the cache.  If all glue RRs do not fit, set TC=1 in
    the header.  Go to step 4."
 
 # Why glue is required
