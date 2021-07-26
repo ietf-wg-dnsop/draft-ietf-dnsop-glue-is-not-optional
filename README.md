@@ -141,8 +141,8 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
       ;www.foo.test.       IN      A
 
       ;; AUTHORITY SECTION:
-      foo.test.               86400        IN      NS      ns1.bar.test.
-      foo.test.               86400        IN      NS      ns2.bar.test.
+      foo.test.               86400        IN      NS      ns1.foo.test.
+      foo.test.               86400        IN      NS      ns2.foo.test.
 
       ;; ADDITIONAL SECTION:
       ns1.foo.test.           86400        IN      A       192.0.1.1
