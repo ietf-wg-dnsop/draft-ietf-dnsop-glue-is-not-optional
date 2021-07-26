@@ -72,12 +72,12 @@ coding = "utf-8"
 .# Abstract
 
    The DNS uses glue records to allow iterative clients to find the
-   addresses of nameservers that are contained within a delegated zone.  Servers
-   are expected to return available glue records in referrals. If message size
-   constraints prevent the inclusion of all glue records in a UDP response,
-   the server MUST set the TC flag to inform
-   the client that the response is incomplete, and that the client SHOULD use TCP
-   to retrieve the full response.
+   addresses of nameservers that are contained within a delegated zone.
+   Authoritative Servers are expected to return all available glue records
+   in referrals. If message size constraints prevent the inclusion of all
+   glue records in a UDP response, the server MUST set the TC flag to
+   inform the client that the response is incomplete, and that the client
+   SHOULD use TCP to retrieve the full response.
 
 {mainmatter}
 
@@ -87,14 +87,19 @@ coding = "utf-8"
    The Domain Name System (DNS) [@!RFC1034], [@!RFC1035] uses glue records
    to allow iterative clients to find the addresses of nameservers that are
    contained within a delegated zone. Glue records are added to the parent
-   zone as part of the delegation process. Servers are expected to return
-   all
-   available glue records in referrals. If message size constraints prevent
-   the inclusion of all glue records in a UDP response, the server MUST set the
-   TC flag to inform the client that the response is incomplete, and that
-   the client SHOULD use TCP to retrieve the full response. This document
-   clarifies that expectation.
+   zone as part of the delegation process and returned in referral responses,
+   otherwise a resolver following the referral has no way of finding these
+   addresses. Authoritative servers are expected to return all available
+   glue records in referrals. If message size constraints prevent the
+   inclusion of all glue records in a UDP response, the server MUST set the
+   TC (Truncated) flag to inform the client that the response is incomplete,
+   and that the client SHOULD use TCP to retrieve the full response. This
+   document clarifies that expectation.
 
+   DNS responses sometimes contain optional data in the additional
+   section. Glue records however are not optional. Several other
+   protocol extensions, when used, are also not optional. This
+   includes TSIG [@RFC2845], OPT [@RFC6891], and SIG(0) [@RFC2931].
 
 ## Reserved Words
 
@@ -102,33 +107,41 @@ coding = "utf-8"
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in [@!RFC2119].
 
-#   Clarifying modifications to RFC1034
+# Glue record example
 
-   Replace
+The following is a simple example of glue records present in the
+delegating zone "test" for the child zone "foo.test". The nameservers
+for foo.test (ns1.foo.test and ns2.foo.test) are both below the
+delegation point. They are configured as glue records in the "test" zone:
 
-   "Copy the NS RRs for the subzone into the authority section of the
-   reply.  Put whatever addresses are available into the additional
-   section, using glue RRs if the addresses are not available from
-   authoritative data or the cache.  Go to step 4."
+~~~
+      foo.test.                  86400   IN NS      ns1.foo.test.
+      foo.test.                  86400   IN NS      ns2.foo.test.
+      ns1.foo.test.              86400   IN A       192.0.1.1
+      ns2.foo.test.              86400   IN A       192.0.1.2
+~~~
 
-   with
+Referral responses from "test" for "foo.test" must include the glue records
+in the additional section (and set TC=1 if they do not fit):
 
-   "Copy the NS RRs for the subzone into the authority section of the
-   reply.  Put whatever addresses are available into the additional
-   section, using glue RRs if the addresses are not available from
-   authoritative data or the cache.  If all glue RRs do not fit, set TC=1 in
-   the header.  Go to step 4."
+~~~
+   ;; QUESTION SECTION:
+   ;www.foo.test.  	IN	A
 
-# Why glue is required
+   ;; AUTHORITY SECTION:
+   foo.test.               86400	IN	NS	ns1.bar.test.
+   foo.test.               86400	IN	NS	ns2.bar.test.
+
+   ;; ADDITIONAL SECTION:
+   ns1.foo.test.           86400	IN	A	192.0.1.1
+   ns2.foo.test.           86400	IN	A	192.0.1.2
+~~~
+
+## Missing glue
 
    While not common, real life examples of servers that fail to set TC=1
-   when glue records are available exist and they do cause resolution
+   when glue records are available, exist and they do cause resolution
    failures.
-
-   *COMMENT DW 20210715: The above doesn't explain why glue is required.
-   Rather it explains why this doc is being written.*
-
-## Example one: Missing glue
 
    The example below from June 2020 shows a case where none of
    the glue records, present in the zone, fitted into the available space and
@@ -166,39 +179,47 @@ coding = "utf-8"
    dhhs.gov.               3600    IN DS      51937 8 2 ...
    dhhs.gov.               3600    IN DS      635 8 1 ...
    dhhs.gov.               3600    IN RRSIG   DS 8 2 3600 ...
-
-   ;; Query time: 226 msec
-   ;; SERVER: 69.36.157.30#53(69.36.157.30)
-   ;; WHEN: Wed Apr 15 13:34:43 AEST 2020
-   ;; MSG SIZE  rcvd: 500
-
-   %
 ~~~
 
-   DNS responses sometimes contain optional data in the additional
-   section. Glue records however are not optional. Several other
-   protocol extensions, when used, are also not optional. This
-   includes TSIG [@RFC2845], OPT [@RFC6891], and SIG(0) [@RFC2931].
+#  Updates to RFC 1034
 
-##  Example two: Sibling Glue from the same delegating zone
+   Replace
 
-   Sibling glue are glue records that are not contained in the delegating
-   zone itself, but in another delegated zone. In many cases, these are not
-   strictly required for resolution, since the resolver can make follow-on
-   queries to the same zone to resolve the nameserver addresses after
-   following the referral to the sibling zone. However, most nameserver
-   implementations provide them as an optimization to obviate the need
-   for extra traffic.
+   "Copy the NS RRs for the subzone into the authority section of the
+   reply.  Put whatever addresses are available into the additional
+   section, using glue RRs if the addresses are not available from
+   authoritative data or the cache.  Go to step 4."
 
-   *COMMENT DW 20210715: This example would be better if it showed a
-   cyclic dependency.  As is the foo.test domain can be resolved because
-   bar.test doesn't have any other dependencies.*
+   with
 
-~~~
+   "Copy the NS RRs for the subzone into the authority section of the
+   reply.  Put whatever addresses are available into the additional
+   section, using glue RRs if the addresses are not available from
+   authoritative data or the cache.  If all glue RRs do not fit, set TC=1 in
+   the header.  Go to step 4."
+
+#  Sibling Glue
+
+   Sibling glue are glue records that are not contained in the delegated
+   zone itself, but in another delegated zone from the same parent. In many
+   cases, these are not strictly required for resolution, since the resolver
+   can make follow-on queries to the same zone to resolve the nameserver
+   addresses after following the referral to the sibling zone. However,
+   most nameserver implementations today provide them as an optimization
+   to obviate the need for extra traffic from iterative resolvers.
+
+   This document clarifies that sibling glue (being part of all available
+   glue records) MUST be returned in referral responses, and that the
+   requirement to set TC=1 applies to sibling glue that cannot fit in the
+   response too.
+
+## Sibling Glue example
+
 Here the delegating zone "test" contains 2 delegations for the
 subzones "bar.test" and "foo.test". The nameservers for "foo.test"
-consist of sibling glue for "bar.test" (ns1.bar.test and ns2.bar.test).
+require sibling glue from "bar.test" (ns1.bar.test and ns2.bar.test).
 
+~~~
       bar.test.                  86400   IN NS      ns1.bar.test.
       bar.test.                  86400   IN NS      ns2.bar.test.
       ns1.bar.test.              86400   IN A       192.0.1.1
@@ -206,10 +227,12 @@ consist of sibling glue for "bar.test" (ns1.bar.test and ns2.bar.test).
 
       foo.test.                  86400   IN NS      ns1.bar.test.
       foo.test.                  86400   IN NS      ns2.bar.test.
+~~~
 
-Referral responses from test for foo.test should include the sibling
-glue:
+Referral responses from "test" for "foo.test" must include the sibling
+glue (and set TC=1 if they do not fit):
 
+~~~
    ;; QUESTION SECTION:
    ;www.foo.test.  	IN	A
 
@@ -220,58 +243,26 @@ glue:
    ;; ADDITIONAL SECTION:
    ns1.bar.test.           86400	IN	A	192.0.1.1
    ns2.bar.test.           86400	IN	A	192.0.1.2
-
 ~~~
 
-Question: if sibling glue from the same delegating zone does not fit into
-the response, should we also recommend or require that TC=1 be set?
-
-*COMMENT DW 20210715: From today's call I believe we agreed that all
-sibling glue must be included or set TC=1.*
-
-##  Example three: Cross Zone Sibling Glue
-
-   Here is a more complex example of sibling glue that lives in
-   another zone, but is required to resolve a circular dependency in
-   the zone configuration.
-
-   *COMMENT DW 20210715: IMO this section/example should be removed.*
-
-~~~
-   example.com.               86400   IN NS      ns1.example.net.
-   example.com.               86400   IN NS      ns2.example.net.
-   ns1.example.com.           86400   IN A       192.0.1.1
-   ns2.example.com.           86400   IN A       192.0.1.2
-
-   example.net.               86400   IN NS      ns1.example.com.
-   example.net.               86400   IN NS      ns2.example.com.
-   ns1.example.net.           86400   IN A       198.51.100.1
-   ns2.example.net.           86400   IN A       198.51.100.2
-~~~
-
-##  Promoted (or orphaned) glue
+#  Promoted (or orphaned) glue
 
    When a zone is deleted but the parent notices that its NS glue records
    are required for other zones, it MAY opt to take these (now orphaned)
    glue records into its own zone to ensure that other zones depending
-   on this glue are not broken. Technically, these NS records are no
+   on this glue are not broken. Technically, these address records are no
    longer glue records, but authoritative data of the parent zone, and
    should be added to the DNS response similarly to regular glue records.
 
-#   Security Considerations
+#  Security Considerations
 
    This document clarifies correct DNS server behaviour and does not introduce
    any changes or new security considerations.
-
-   *COMMENT DW 20210715: I think the document should say that some servers might
-   experience an increase in TCP if implementations require all glue or set TC=1.
-   If not in this section then somewhere else.*
 
 #   IANA Considerations
 
    There are no actions for IANA.
 
 {backmatter}
-
 
 {numbered="false"}
