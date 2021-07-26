@@ -221,8 +221,8 @@ subzones "bar.test" and "foo.test".
 ~~~
       bar.test.                  86400   IN NS      ns1.bar.test.
       bar.test.                  86400   IN NS      ns2.bar.test.
-      ns1.bar.test.              86400   IN A       192.0.1.1
-      ns2.bar.test.              86400   IN A       192.0.1.2
+      ns1.bar.test.              86400   IN A       192.0.2.1
+      ns2.bar.test.              86400   IN A       192.0.2.2
 
       foo.test.                  86400   IN NS      ns1.bar.test.
       foo.test.                  86400   IN NS      ns2.bar.test.
