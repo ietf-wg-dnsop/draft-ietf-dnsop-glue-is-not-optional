@@ -215,9 +215,8 @@ in the additional section (and set TC=1 if they do not fit):
 
 ## Sibling Glue example
 
-Here the delegating zone "test" contains 2 delegations for the
-subzones "bar.test" and "foo.test". The nameservers for "foo.test"
-require sibling glue from "bar.test" (ns1.bar.test and ns2.bar.test).
+Here the delegating zone "test" contains 2 sub-delegations for the
+subzones "bar.test" and "foo.test".
 
 ~~~
       bar.test.                  86400   IN NS      ns1.bar.test.

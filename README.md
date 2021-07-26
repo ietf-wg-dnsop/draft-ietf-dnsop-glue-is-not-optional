@@ -7,11 +7,11 @@ DNSOP                                                         M. Andrews
 Internet-Draft                                                       ISC
 Updates: 1034 (if approved)                                     S. Huque
 Intended status: Standards Track                              Salesforce
-Expires: 26 January 2022                                      P. Wouters
+Expires: 27 January 2022                                      P. Wouters
                                                                    Aiven
                                                               D. Wessels
                                                                 Verisign
-                                                            25 July 2021
+                                                            26 July 2021
 
 
              Glue In DNS Referral Responses Is Not Optional
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 January 2022.
+   This Internet-Draft will expire on 27 January 2022.
 
 Copyright Notice
 
@@ -54,7 +54,7 @@ Copyright Notice
 
 
 
-Andrews, et al.          Expires 26 January 2022                [Page 1]
+Andrews, et al.          Expires 27 January 2022                [Page 1]
 
 Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
@@ -110,7 +110,7 @@ Table of Contents
 
 
 
-Andrews, et al.          Expires 26 January 2022                [Page 2]
+Andrews, et al.          Expires 27 January 2022                [Page 2]
 
 Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
@@ -166,7 +166,7 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
 
 
-Andrews, et al.          Expires 26 January 2022                [Page 3]
+Andrews, et al.          Expires 27 January 2022                [Page 3]
 
 Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
@@ -222,7 +222,7 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
 
 
-Andrews, et al.          Expires 26 January 2022                [Page 4]
+Andrews, et al.          Expires 27 January 2022                [Page 4]
 
 Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
@@ -245,9 +245,8 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
 4.1.  Sibling Glue example
 
-   Here the delegating zone "test" contains 2 delegations for the
-   subzones "bar.test" and "foo.test".  The nameservers for "foo.test"
-   require sibling glue from "bar.test" (ns1.bar.test and ns2.bar.test).
+   Here the delegating zone "test" contains 2 sub-delegations for the
+   subzones "bar.test" and "foo.test".
 
          bar.test.                  86400   IN NS      ns1.bar.test.
          bar.test.                  86400   IN NS      ns2.bar.test.
@@ -278,7 +277,8 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
 
 
-Andrews, et al.          Expires 26 January 2022                [Page 5]
+
+Andrews, et al.          Expires 27 January 2022                [Page 5]
 
 Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
@@ -334,7 +334,7 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
 
 
-Andrews, et al.          Expires 26 January 2022                [Page 6]
+Andrews, et al.          Expires 27 January 2022                [Page 6]
 
 Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
@@ -390,5 +390,5 @@ Authors' Addresses
 
 
 
-Andrews, et al.          Expires 26 January 2022                [Page 7]
+Andrews, et al.          Expires 27 January 2022                [Page 7]
 ```
