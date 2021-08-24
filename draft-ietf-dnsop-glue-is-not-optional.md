@@ -117,7 +117,7 @@ delegation point. They are configured as glue records in the "test" zone:
 ~~~
       foo.test.                  86400   IN NS      ns1.foo.test.
       foo.test.                  86400   IN NS      ns2.foo.test.
-      ns1.foo.test.              86400   IN A       192.2.0.1
+      ns1.foo.test.              86400   IN A       192.0.2.1
       ns2.foo.test.              86400   IN A       2001:db8::2:2
 ~~~
 
@@ -133,7 +133,7 @@ in the additional section (and set TC=1 if they do not fit):
    foo.test.               86400	IN	NS	ns2.foo.test.
 
    ;; ADDITIONAL SECTION:
-   ns1.foo.test.           86400	IN	A	192.2.0.1
+   ns1.foo.test.           86400	IN	A	192.0.2.1
    ns2.foo.test.           86400	IN	A	2001:db8::2:2
 ~~~
 
@@ -221,7 +221,7 @@ subzones "bar.test" and "foo.test".
 ~~~
       bar.test.                  86400   IN NS      ns1.bar.test.
       bar.test.                  86400   IN NS      ns2.bar.test.
-      ns1.bar.test.              86400   IN A       192.2.0.1
+      ns1.bar.test.              86400   IN A       192.0.2.1
       ns2.bar.test.              86400   IN A       2001:db8::2:2
 
       foo.test.                  86400   IN NS      ns1.bar.test.
@@ -240,7 +240,7 @@ glue (and set TC=1 if they do not fit):
    foo.test.               86400	IN	NS	ns2.bar.test.
 
    ;; ADDITIONAL SECTION:
-   ns1.bar.test.           86400	IN	A	192.2.0.1
+   ns1.bar.test.           86400	IN	A	192.0.2.1
    ns2.bar.test.           86400	IN	A	2001:db8::2:2
 ~~~
 
