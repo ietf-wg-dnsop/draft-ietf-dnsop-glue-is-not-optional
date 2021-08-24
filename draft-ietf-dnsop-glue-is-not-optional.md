@@ -265,7 +265,11 @@ glue (and set TC=1 if they do not fit):
 #  Acknowledgements
 
    The authors wish to thank
+   Joe Abley,
+   Brian Dickson,
    Geoff Huston,
+   Jared Mauch,
+   George Michaelson,
    Benno Overeinder,
    John R Levine,
    Shinta Sato,
