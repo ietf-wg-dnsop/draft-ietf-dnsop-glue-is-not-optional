@@ -107,22 +107,29 @@ coding = "utf-8"
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in [@!RFC2119].
 
-# Glue record example
+# Types of Glue
 
-The following is a simple example of glue records present in the
-delegating zone "test" for the child zone "foo.test". The nameservers
-for foo.test (ns1.foo.test and ns2.foo.test) are both below the
-delegation point. They are configured as glue records in the "test" zone:
+   This section describes different types of glue that may be found in
+   DNS referral responses.  Note that the type of glue depends on 
+   the QNAME.  A particular record can be in-domain glue for one response
+   and sibling glue for another.
+
+## In-Domain Glue {#indomainglue}
+
+   The following is a simple example of glue records present in the
+   delegating zone "test" for the child zone "foo.test". The nameservers
+   for foo.test (ns1.foo.test and ns2.foo.test) are both below the
+   delegation point. They are configured as glue records in the "test" zone:
 
 ~~~
-      foo.test.                  86400   IN NS      ns1.foo.test.
-      foo.test.                  86400   IN NS      ns2.foo.test.
-      ns1.foo.test.              86400   IN A       192.0.1.1
-      ns2.foo.test.              86400   IN A       192.0.1.2
+   foo.test.                  86400   IN NS      ns1.foo.test.
+   foo.test.                  86400   IN NS      ns2.foo.test.
+   ns1.foo.test.              86400   IN A       192.0.1.1
+   ns2.foo.test.              86400   IN A       192.0.1.2
 ~~~
 
-Referral responses from "test" for "foo.test" must include the glue records
-in the additional section (and set TC=1 if they do not fit):
+   A referral response from "test" for "foo.test" with in-domain
+   glue looks like this:
 
 ~~~
    ;; QUESTION SECTION:
@@ -137,7 +144,71 @@ in the additional section (and set TC=1 if they do not fit):
    ns2.foo.test.           86400	IN	A	192.0.1.2
 ~~~
 
+##  Sibling Glue {#siblingglue}
+
+   Sibling glue are glue records that are not contained in the delegated
+   zone itself, but in another delegated zone from the same parent. In many
+   cases, these are not strictly required for resolution, since the resolver
+   can make follow-on queries to the same zone to resolve the nameserver
+   addresses after following the referral to the sibling zone. However,
+   most nameserver implementations today provide them as an optimization
+   to obviate the need for extra traffic from iterative resolvers.
+
+   Here the delegating zone "test" contains 2 sub-delegations for the
+   subzones "bar.test" and "foo.test":
+
+~~~
+   bar.test.                  86400   IN NS      ns1.bar.test.
+   bar.test.                  86400   IN NS      ns2.bar.test.
+   ns1.bar.test.              86400   IN A       192.0.2.1
+   ns2.bar.test.              86400   IN A       192.0.2.2
+
+   foo.test.                  86400   IN NS      ns1.bar.test.
+   foo.test.                  86400   IN NS      ns2.bar.test.
+~~~
+
+  A referral response from "test" for "foo.test" with sibling glue
+  looks like this:
+
+~~~
+   ;; QUESTION SECTION:
+   ;www.foo.test.  	IN	A
+
+   ;; AUTHORITY SECTION:
+   foo.test.               86400	IN	NS	ns1.bar.test.
+   foo.test.               86400	IN	NS	ns2.bar.test.
+
+   ;; ADDITIONAL SECTION:
+   ns1.bar.test.           86400	IN	A	192.0.1.1
+   ns2.bar.test.           86400	IN	A	192.0.1.2
+~~~
+
+## Promoted (or orphaned) glue
+
+   When a delegation is deleted from a zone, there may other delegations
+   in the zone that rely on name servers with names below the deleted
+   delegation.  For example, consider these delegations in the "test"
+   zone:
+
+~~~
+   aaa.test.                  86400   IN NS      ns1.bbb.test.
+   aaa.test.                  86400   IN NS      ns2.bbb.test.
+
+   bbb.test.                  86400   IN NS      ns1.bbb.example.
+   bbb.test.                  86400   IN NS      ns2.bbb.example.
+   ns1.bbb.test.              86400   IN A       192.0.2.5
+   ns2.bbb.test.              86400   IN A       2001:db8::2:6
+~~~
+
+   If the delegation "bbb.test" is deleted from the zone, the zone
+   operator must decide to either remove or retain the "ns1.bbb.test" and
+   ns2.bbb.test" glue records.  If they are removed, the the "aaa.test"
+   delegation does not work.  If they are retained, the orphaned glue
+   records are promoted to authoritative data in the zone.
+
 ## Missing glue
+
+   [missing glue isn't really a type of glue, so we'll need to think about this]
 
    While not common, real life examples of servers that fail to set TC=1
    when glue records are available, exist and they do cause resolution
@@ -181,7 +252,29 @@ in the additional section (and set TC=1 if they do not fit):
    dhhs.gov.               3600    IN RRSIG   DS 8 2 3600 ...
 ~~~
 
-#  Updates to RFC 1034
+# Requirements
+
+## In-Domain Glue
+
+   This document clarifies that when a name server generates a referral
+   response, it MUST either include all in-domain glue records in the
+   additional section, or MUST set TC=1.
+
+## Sibling Glue
+
+   This document clarifies that when a name server generates a referral
+   response, it SHOULD include available sibling glue records in the
+   additional section.  If sibling glue records do not fit in the
+   response, the name server is NOT REQUIRED to set TC=1.
+
+## Promoted (or orphaned) glue
+
+   Promoted glue is a special case of sibling glue and should be treated
+   as such.
+
+## Updates to RFC 1034
+
+   [this doesn't really account for SHOULD on sibling glue...]
 
    Replace
 
@@ -198,60 +291,6 @@ in the additional section (and set TC=1 if they do not fit):
    authoritative data or the cache.  If all glue RRs do not fit, set TC=1 in
    the header.  Go to step 4."
 
-#  Sibling Glue
-
-   Sibling glue are glue records that are not contained in the delegated
-   zone itself, but in another delegated zone from the same parent. In many
-   cases, these are not strictly required for resolution, since the resolver
-   can make follow-on queries to the same zone to resolve the nameserver
-   addresses after following the referral to the sibling zone. However,
-   most nameserver implementations today provide them as an optimization
-   to obviate the need for extra traffic from iterative resolvers.
-
-   This document clarifies that sibling glue (being part of all available
-   glue records) MUST be returned in referral responses, and that the
-   requirement to set TC=1 applies to sibling glue that cannot fit in the
-   response too.
-
-## Sibling Glue example
-
-Here the delegating zone "test" contains 2 sub-delegations for the
-subzones "bar.test" and "foo.test".
-
-~~~
-      bar.test.                  86400   IN NS      ns1.bar.test.
-      bar.test.                  86400   IN NS      ns2.bar.test.
-      ns1.bar.test.              86400   IN A       192.0.2.1
-      ns2.bar.test.              86400   IN A       192.0.2.2
-
-      foo.test.                  86400   IN NS      ns1.bar.test.
-      foo.test.                  86400   IN NS      ns2.bar.test.
-~~~
-
-Referral responses from "test" for "foo.test" must include the sibling
-glue (and set TC=1 if they do not fit):
-
-~~~
-   ;; QUESTION SECTION:
-   ;www.foo.test.  	IN	A
-
-   ;; AUTHORITY SECTION:
-   foo.test.               86400	IN	NS	ns1.bar.test.
-   foo.test.               86400	IN	NS	ns2.bar.test.
-
-   ;; ADDITIONAL SECTION:
-   ns1.bar.test.           86400	IN	A	192.0.1.1
-   ns2.bar.test.           86400	IN	A	192.0.1.2
-~~~
-
-#  Promoted (or orphaned) glue
-
-   When a zone is deleted but the parent notices that its NS glue records
-   are required for other zones, it MAY opt to take these (now orphaned)
-   glue records into its own zone to ensure that other zones depending
-   on this glue are not broken. Technically, these address records are no
-   longer glue records, but authoritative data of the parent zone, and
-   should be added to the DNS response similarly to regular glue records.
 
 #  Security Considerations
 
