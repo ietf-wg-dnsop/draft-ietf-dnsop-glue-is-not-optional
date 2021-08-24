@@ -262,6 +262,20 @@ glue (and set TC=1 if they do not fit):
 
    There are no actions for IANA.
 
+#  Acknowledgements
+
+   The authors wish to thank
+   Geoff Huston,
+   Benno Overeinder,
+   John R Levine,
+   Shinta Sato,
+   Puneet Sood,
+   Ralf Weber,
+   Tim Wicinski,
+   Suzanne Woolf,
+   and other members of the DNSOP working group
+   for their input.
+
 {backmatter}
 
 {numbered="false"}
