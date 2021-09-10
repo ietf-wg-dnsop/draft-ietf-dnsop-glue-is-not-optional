@@ -7,11 +7,11 @@ DNSOP                                                         M. Andrews
 Internet-Draft                                                       ISC
 Updates: 1034 (if approved)                                     S. Huque
 Intended status: Standards Track                              Salesforce
-Expires: 27 January 2022                                      P. Wouters
+Expires: 14 March 2022                                        P. Wouters
                                                                    Aiven
                                                               D. Wessels
                                                                 Verisign
-                                                            26 July 2021
+                                                       10 September 2021
 
 
              Glue In DNS Referral Responses Is Not Optional
@@ -25,7 +25,8 @@ Abstract
    records in referrals.  If message size constraints prevent the
    inclusion of all glue records in a UDP response, the server MUST set
    the TC flag to inform the client that the response is incomplete, and
-   that the client SHOULD use TCP to retrieve the full response.
+   that the client SHOULD use TCP to retrieve the full response.  This
+   document updates RFC 1034 to clarify correct server behavior.
 
 Status of This Memo
 
@@ -42,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 January 2022.
+   This Internet-Draft will expire on 14 March 2022.
 
 Copyright Notice
 
@@ -53,10 +54,9 @@ Copyright Notice
 
 
 
-
-Andrews, et al.          Expires 27 January 2022                [Page 1]
+Andrews, et al.           Expires 14 March 2022                 [Page 1]
 
-Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
+Internet-DraftGlue In DNS Referral Responses Is Not OptionSeptember 2021
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -80,8 +80,9 @@ Table of Contents
    5.  Promoted (or orphaned) glue . . . . . . . . . . . . . . . . .   6
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
-   8.  Normative References  . . . . . . . . . . . . . . . . . . . .   6
-   9.  Informative References  . . . . . . . . . . . . . . . . . . .   6
+   8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
+   9.  Normative References  . . . . . . . . . . . . . . . . . . . .   6
+   10. Informative References  . . . . . . . . . . . . . . . . . . .   6
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
 
 1.  Introduction
@@ -104,16 +105,18 @@ Table of Contents
    protocol extensions, when used, are also not optional.  This includes
    TSIG [RFC2845], OPT [RFC6891], and SIG(0) [RFC2931].
 
+   Note that this document only clarifies requirements of name server
 
 
 
 
-
-
-Andrews, et al.          Expires 27 January 2022                [Page 2]
+Andrews, et al.           Expires 14 March 2022                 [Page 2]
 
-Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
+Internet-DraftGlue In DNS Referral Responses Is Not OptionSeptember 2021
 
+
+   software implementations.  It does not place any requirements on data
+   placed in DNS zones or registries.
 
 1.1.  Reserved Words
 
@@ -131,8 +134,8 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
          foo.test.                  86400   IN NS      ns1.foo.test.
          foo.test.                  86400   IN NS      ns2.foo.test.
-         ns1.foo.test.              86400   IN A       192.0.1.1
-         ns2.foo.test.              86400   IN A       192.0.1.2
+         ns1.foo.test.              86400   IN A       192.0.2.1
+         ns2.foo.test.              86400   IN A       2001:db8::2:2
 
    Referral responses from "test" for "foo.test" must include the glue
    records in the additional section (and set TC=1 if they do not fit):
@@ -145,8 +148,8 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
       foo.test.               86400        IN      NS      ns2.foo.test.
 
       ;; ADDITIONAL SECTION:
-      ns1.foo.test.           86400        IN      A       192.0.1.1
-      ns2.foo.test.           86400        IN      A       192.0.1.2
+      ns1.foo.test.           86400        IN      A       192.0.2.1
+      ns2.foo.test.           86400        IN      A       2001:db8::2:2
 
 2.1.  Missing glue
 
@@ -160,16 +163,16 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
    [RFC4033], [RFC4034], [RFC4035] referral response, this behaviour has
    also been seen with plain DNS responses as well.  The records have
    been truncated for display purposes.  Note that at the time of this
+
+
+
+Andrews, et al.           Expires 14 March 2022                 [Page 3]
+
+Internet-DraftGlue In DNS Referral Responses Is Not OptionSeptember 2021
+
+
    writing, this configuration has been corrected and the response
    correctly sets the TC=1 flag.
-
-
-
-
-Andrews, et al.          Expires 27 January 2022                [Page 3]
-
-Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
-
 
       % dig +norec +dnssec +bufsize=512 +ignore @a.gov-servers.net \
              rh202ns2.355.dhhs.gov
@@ -219,12 +222,9 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
 
 
-
-
-
-Andrews, et al.          Expires 27 January 2022                [Page 4]
+Andrews, et al.           Expires 14 March 2022                 [Page 4]
 
-Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
+Internet-DraftGlue In DNS Referral Responses Is Not OptionSeptember 2021
 
 
 4.  Sibling Glue
@@ -250,8 +250,8 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
          bar.test.                  86400   IN NS      ns1.bar.test.
          bar.test.                  86400   IN NS      ns2.bar.test.
-         ns1.bar.test.              86400   IN A       192.0.1.1
-         ns2.bar.test.              86400   IN A       192.0.1.2
+         ns1.bar.test.              86400   IN A       192.0.2.1
+         ns2.bar.test.              86400   IN A       2001:db8::2:2
 
          foo.test.                  86400   IN NS      ns1.bar.test.
          foo.test.                  86400   IN NS      ns2.bar.test.
@@ -267,8 +267,8 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
       foo.test.               86400        IN      NS      ns2.bar.test.
 
       ;; ADDITIONAL SECTION:
-      ns1.bar.test.           86400        IN      A       192.0.1.1
-      ns2.bar.test.           86400        IN      A       192.0.1.2
+      ns1.bar.test.           86400        IN      A       192.0.2.1
+      ns2.bar.test.           86400        IN      A       2001:db8::2:2
 
 
 
@@ -278,9 +278,9 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
 
 
-Andrews, et al.          Expires 27 January 2022                [Page 5]
+Andrews, et al.           Expires 14 March 2022                 [Page 5]
 
-Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
+Internet-DraftGlue In DNS Referral Responses Is Not OptionSeptember 2021
 
 
 5.  Promoted (or orphaned) glue
@@ -302,7 +302,14 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
 
    There are no actions for IANA.
 
-8.  Normative References
+8.  Acknowledgements
+
+   The authors wish to thank Joe Abley, Brian Dickson, Geoff Huston,
+   Jared Mauch, George Michaelson, Benno Overeinder, John R Levine,
+   Shinta Sato, Puneet Sood, Ralf Weber, Tim Wicinski, Suzanne Woolf,
+   and other members of the DNSOP working group for their input.
+
+9.  Normative References
 
    [RFC1034]  Mockapetris, P., "Domain names - concepts and facilities",
               STD 13, RFC 1034, DOI 10.17487/RFC1034, November 1987,
@@ -317,27 +324,24 @@ Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-9.  Informative References
+10.  Informative References
 
    [RFC2845]  Vixie, P., Gudmundsson, O., Eastlake 3rd, D., and B.
               Wellington, "Secret Key Transaction Authentication for DNS
               (TSIG)", RFC 2845, DOI 10.17487/RFC2845, May 2000,
               <https://www.rfc-editor.org/info/rfc2845>.
 
+
+
+
+Andrews, et al.           Expires 14 March 2022                 [Page 6]
+
+Internet-DraftGlue In DNS Referral Responses Is Not OptionSeptember 2021
+
+
    [RFC2931]  Eastlake 3rd, D., "DNS Request and Transaction Signatures
               ( SIG(0)s )", RFC 2931, DOI 10.17487/RFC2931, September
               2000, <https://www.rfc-editor.org/info/rfc2931>.
-
-
-
-
-
-
-
-Andrews, et al.          Expires 27 January 2022                [Page 6]
-
-Internet-DrafGlue In DNS Referral Responses Is Not Optional    July 2021
-
 
    [RFC4033]  Arends, R., Austein, R., Larson, M., Massey, D., and S.
               Rose, "DNS Security Introduction and Requirements",
@@ -386,9 +390,5 @@ Authors' Addresses
 
 
 
-
-
-
-
-Andrews, et al.          Expires 27 January 2022                [Page 7]
+Andrews, et al.           Expires 14 March 2022                 [Page 7]
 ```
