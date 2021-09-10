@@ -78,6 +78,7 @@ coding = "utf-8"
    glue records in a UDP response, the server MUST set the TC flag to
    inform the client that the response is incomplete, and that the client
    SHOULD use TCP to retrieve the full response.
+   This document updates RFC 1034 to clarify correct server behavior.
 
 {mainmatter}
 
@@ -100,6 +101,10 @@ coding = "utf-8"
    section. Glue records however are not optional. Several other
    protocol extensions, when used, are also not optional. This
    includes TSIG [@RFC2845], OPT [@RFC6891], and SIG(0) [@RFC2931].
+
+   Note that this document only clarifies requirements of name server
+   software implementations.  It does not place any requirements on
+   data placed in DNS zones or registries.
 
 ## Reserved Words
 
