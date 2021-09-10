@@ -78,6 +78,7 @@ coding = "utf-8"
    glue records in a UDP response, the server MUST set the TC flag to
    inform the client that the response is incomplete, and that the client
    SHOULD use TCP to retrieve the full response.
+   This document updates RFC 1034 to clarify correct server behavior.
 
 {mainmatter}
 
@@ -100,6 +101,10 @@ coding = "utf-8"
    section. Glue records however are not optional. Several other
    protocol extensions, when used, are also not optional. This
    includes TSIG [@RFC2845], OPT [@RFC6891], and SIG(0) [@RFC2931].
+
+   Note that this document only clarifies requirements of name server
+   software implementations.  It does not place any requirements on
+   data placed in DNS zones or registries.
 
 ## Reserved Words
 
@@ -124,8 +129,8 @@ coding = "utf-8"
 ~~~
    foo.test.                  86400   IN NS      ns1.foo.test.
    foo.test.                  86400   IN NS      ns2.foo.test.
-   ns1.foo.test.              86400   IN A       192.0.1.1
-   ns2.foo.test.              86400   IN A       192.0.1.2
+   ns1.foo.test.              86400   IN A       192.0.2.1
+   ns2.foo.test.              86400   IN A       2001:db8::2:2
 ~~~
 
    A referral response from "test" for "foo.test" with in-domain
@@ -140,8 +145,8 @@ coding = "utf-8"
    foo.test.               86400	IN	NS	ns2.foo.test.
 
    ;; ADDITIONAL SECTION:
-   ns1.foo.test.           86400	IN	A	192.0.1.1
-   ns2.foo.test.           86400	IN	A	192.0.1.2
+   ns1.foo.test.           86400	IN	A	192.0.2.1
+   ns2.foo.test.           86400	IN	A	2001:db8::2:2
 ~~~
 
 ##  Sibling Glue {#siblingglue}
@@ -161,7 +166,7 @@ coding = "utf-8"
    bar.test.                  86400   IN NS      ns1.bar.test.
    bar.test.                  86400   IN NS      ns2.bar.test.
    ns1.bar.test.              86400   IN A       192.0.2.1
-   ns2.bar.test.              86400   IN A       192.0.2.2
+   ns2.bar.test.              86400   IN A       2001:db8::2:2
 
    foo.test.                  86400   IN NS      ns1.bar.test.
    foo.test.                  86400   IN NS      ns2.bar.test.
@@ -179,8 +184,8 @@ coding = "utf-8"
    foo.test.               86400	IN	NS	ns2.bar.test.
 
    ;; ADDITIONAL SECTION:
-   ns1.bar.test.           86400	IN	A	192.0.1.1
-   ns2.bar.test.           86400	IN	A	192.0.1.2
+   ns1.bar.test.           86400	IN	A	192.0.2.1
+   ns2.bar.test.           86400	IN	A	2001:db8::2:2
 ~~~
 
 ## Promoted (or orphaned) glue
@@ -300,6 +305,24 @@ coding = "utf-8"
 #   IANA Considerations
 
    There are no actions for IANA.
+
+#  Acknowledgements
+
+   The authors wish to thank
+   Joe Abley,
+   Brian Dickson,
+   Geoff Huston,
+   Jared Mauch,
+   George Michaelson,
+   Benno Overeinder,
+   John R Levine,
+   Shinta Sato,
+   Puneet Sood,
+   Ralf Weber,
+   Tim Wicinski,
+   Suzanne Woolf,
+   and other members of the DNSOP working group
+   for their input.
 
 {backmatter}
 
