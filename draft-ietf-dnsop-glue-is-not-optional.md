@@ -244,17 +244,6 @@ glue (and set TC=1 if they do not fit):
    ns2.bar.test.           86400	IN	A	192.0.1.2
 ~~~
 
-#  Promoted (or orphaned) glue
-
-   When a zone is deleted but the parent notices that its NS glue records
-   are required for other zones, it MAY opt to take these (now orphaned)
-   glue records into its own zone to ensure that other zones depending
-   on this glue are not broken. Technically, these address records are no
-   longer glue records, but authoritative data of the parent zone, and
-   should be added to the DNS response similarly to regular glue records.
-
-#  Security Considerations
-
    This document clarifies correct DNS server behaviour and does not introduce
    any changes or new security considerations.
 
