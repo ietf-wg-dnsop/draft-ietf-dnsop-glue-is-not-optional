@@ -188,29 +188,6 @@ coding = "utf-8"
    ns2.bar.test.           86400	IN	A	2001:db8::2:2
 ~~~
 
-## Promoted (or orphaned) glue
-
-   When a delegation is deleted from a zone, there may other delegations
-   in the zone that rely on name servers with names below the deleted
-   delegation.  For example, consider these delegations in the "test"
-   zone:
-
-~~~
-   aaa.test.                  86400   IN NS      ns1.bbb.test.
-   aaa.test.                  86400   IN NS      ns2.bbb.test.
-
-   bbb.test.                  86400   IN NS      ns1.bbb.example.
-   bbb.test.                  86400   IN NS      ns2.bbb.example.
-   ns1.bbb.test.              86400   IN A       192.0.2.5
-   ns2.bbb.test.              86400   IN A       2001:db8::2:6
-~~~
-
-   If the delegation "bbb.test" is deleted from the zone, the zone
-   operator must decide to either remove or retain the "ns1.bbb.test" and
-   ns2.bbb.test" glue records.  If they are removed, the the "aaa.test"
-   delegation does not work.  If they are retained, the orphaned glue
-   records are promoted to authoritative data in the zone.
-
 ## Missing glue
 
    [missing glue isn't really a type of glue, so we'll need to think about this]
