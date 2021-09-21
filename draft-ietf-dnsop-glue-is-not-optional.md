@@ -269,51 +269,6 @@ coding = "utf-8"
    authoritative data or the cache.  If all glue RRs do not fit, set TC=1 in
    the header.  Go to step 4."
 
-#  Sibling Glue
-
-   Sibling glue are glue records that are not contained in the delegated
-   zone itself, but in another delegated zone from the same parent. In many
-   cases, these are not strictly required for resolution, since the resolver
-   can make follow-on queries to the same zone to resolve the nameserver
-   addresses after following the referral to the sibling zone. However,
-   most nameserver implementations today provide them as an optimization
-   to obviate the need for extra traffic from iterative resolvers.
-
-   This document clarifies that sibling glue (being part of all available
-   glue records) MUST be returned in referral responses, and that the
-   requirement to set TC=1 applies to sibling glue that cannot fit in the
-   response too.
-
-## Sibling Glue example
-
-Here the delegating zone "test" contains 2 sub-delegations for the
-subzones "bar.test" and "foo.test".
-
-~~~
-      bar.test.                  86400   IN NS      ns1.bar.test.
-      bar.test.                  86400   IN NS      ns2.bar.test.
-      ns1.bar.test.              86400   IN A       192.0.2.1
-      ns2.bar.test.              86400   IN A       2001:db8::2:2
-
-      foo.test.                  86400   IN NS      ns1.bar.test.
-      foo.test.                  86400   IN NS      ns2.bar.test.
-~~~
-
-Referral responses from "test" for "foo.test" must include the sibling
-glue (and set TC=1 if they do not fit):
-
-~~~
-   ;; QUESTION SECTION:
-   ;www.foo.test.  	IN	A
-
-   ;; AUTHORITY SECTION:
-   foo.test.               86400	IN	NS	ns1.bar.test.
-   foo.test.               86400	IN	NS	ns2.bar.test.
-
-   ;; ADDITIONAL SECTION:
-   ns1.bar.test.           86400	IN	A	192.0.2.1
-   ns2.bar.test.           86400	IN	A	2001:db8::2:2
-~~~
 #  Security Considerations
 
    This document clarifies correct DNS server behaviour and does not introduce
