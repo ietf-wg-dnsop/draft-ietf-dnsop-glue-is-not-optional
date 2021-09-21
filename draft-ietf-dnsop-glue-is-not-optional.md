@@ -249,11 +249,6 @@ coding = "utf-8"
    additional section.  If sibling glue records do not fit in the
    response, the name server is NOT REQUIRED to set TC=1.
 
-## Promoted (or orphaned) glue
-
-   Promoted glue is a special case of sibling glue and should be treated
-   as such.
-
 ## Updates to RFC 1034
 
    [this doesn't really account for SHOULD on sibling glue...]
