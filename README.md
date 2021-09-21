@@ -83,9 +83,10 @@ Table of Contents
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
-   7.  Normative References  . . . . . . . . . . . . . . . . . . . .   6
-   8.  Informative References  . . . . . . . . . . . . . . . . . . .   7
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
+   7.  Changes . . . . . . . . . . . . . . . . . . . . . . . . . . .   6
+   8.  Normative References  . . . . . . . . . . . . . . . . . . . .   7
+   9.  Informative References  . . . . . . . . . . . . . . . . . . .   7
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   8
 
 1.  Introduction
 
@@ -106,7 +107,6 @@ Table of Contents
    section.  Glue records however are not optional.  Several other
    protocol extensions, when used, are also not optional.  This includes
    TSIG [RFC2845], OPT [RFC6891], and SIG(0) [RFC2931].
-
 
 
 
@@ -318,7 +318,35 @@ Internet-DraftGlue In DNS Referral Responses Is Not OptionSeptember 2021
    Shinta Sato, Puneet Sood, Ralf Weber, Tim Wicinski, Suzanne Woolf,
    and other members of the DNSOP working group for their input.
 
-7.  Normative References
+7.  Changes
+
+   RFC Editor: Please remove this section before publication.
+
+   This section lists substantial changes to the document as it is being
+   worked on.
+
+   From -01 to -02:
+
+   *  Clarified requirement to include _all_ glue or set TC=1.
+
+   *  Clarified scope to focus only on name server responses, and not
+      zone/registry data.
+
+
+
+Andrews, et al.           Expires 25 March 2022                 [Page 6]
+
+Internet-DraftGlue In DNS Referral Responses Is Not OptionSeptember 2021
+
+
+   *  Reorganized with section 2 as Types of Glue and section 3 as
+      Requirements.
+
+   *  Removed any discussion of promoted / orphan glue.
+
+   *  Use appropriate documentation addresses and domain names.
+
+8.  Normative References
 
    [RFC1034]  Mockapetris, P., "Domain names - concepts and facilities",
               STD 13, RFC 1034, DOI 10.17487/RFC1034, November 1987,
@@ -330,19 +358,10 @@ Internet-DraftGlue In DNS Referral Responses Is Not OptionSeptember 2021
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
-
-
-
-
-Andrews, et al.           Expires 25 March 2022                 [Page 6]
-
-Internet-DraftGlue In DNS Referral Responses Is Not OptionSeptember 2021
-
-
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-8.  Informative References
+9.  Informative References
 
    [RFC2845]  Vixie, P., Gudmundsson, O., Eastlake 3rd, D., and B.
               Wellington, "Secret Key Transaction Authentication for DNS
@@ -368,6 +387,14 @@ Internet-DraftGlue In DNS Referral Responses Is Not OptionSeptember 2021
               Extensions", RFC 4035, DOI 10.17487/RFC4035, March 2005,
               <https://www.rfc-editor.org/info/rfc4035>.
 
+
+
+
+Andrews, et al.           Expires 25 March 2022                 [Page 7]
+
+Internet-DraftGlue In DNS Referral Responses Is Not OptionSeptember 2021
+
+
    [RFC6891]  Damas, J., Graff, M., and P. Vixie, "Extension Mechanisms
               for DNS (EDNS(0))", STD 75, RFC 6891,
               DOI 10.17487/RFC6891, April 2013,
@@ -387,14 +414,6 @@ Authors' Addresses
    Email: shuque@gmail.com
 
 
-
-
-
-Andrews, et al.           Expires 25 March 2022                 [Page 7]
-
-Internet-DraftGlue In DNS Referral Responses Is Not OptionSeptember 2021
-
-
    Paul Wouters
    Aiven
 
@@ -405,25 +424,6 @@ Internet-DraftGlue In DNS Referral Responses Is Not OptionSeptember 2021
    Verisign
 
    Email: dwessels@verisign.com
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

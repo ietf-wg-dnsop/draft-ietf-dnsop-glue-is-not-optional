@@ -296,6 +296,20 @@ coding = "utf-8"
    and other members of the DNSOP working group
    for their input.
 
+#  Changes
+
+  RFC Editor: Please remove this section before publication.
+
+  This section lists substantial changes to the document as it is being worked on.
+
+  From -01 to -02:
+
+  - Clarified requirement to include *all* glue or set TC=1.
+  - Clarified scope to focus only on name server responses, and not zone/registry data.
+  - Reorganized with section 2 as Types of Glue and section 3 as Requirements.
+  - Removed any discussion of promoted / orphan glue.
+  - Use appropriate documentation addresses and domain names.
+
 {backmatter}
 
 {numbered="false"}
