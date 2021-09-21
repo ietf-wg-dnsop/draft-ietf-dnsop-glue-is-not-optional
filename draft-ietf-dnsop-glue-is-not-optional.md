@@ -130,7 +130,7 @@ coding = "utf-8"
    foo.test.                  86400   IN NS      ns1.foo.test.
    foo.test.                  86400   IN NS      ns2.foo.test.
    ns1.foo.test.              86400   IN A       192.0.2.1
-   ns2.foo.test.              86400   IN A       2001:db8::2:2
+   ns2.foo.test.              86400   IN AAAA    2001:db8::2:2
 ~~~
 
    A referral response from "test" for "foo.test" with in-domain
@@ -146,7 +146,7 @@ coding = "utf-8"
 
    ;; ADDITIONAL SECTION:
    ns1.foo.test.           86400	IN	A	192.0.2.1
-   ns2.foo.test.           86400	IN	A	2001:db8::2:2
+   ns2.foo.test.           86400	IN	AAAA	2001:db8::2:2
 ~~~
 
 ##  Sibling Glue {#siblingglue}
@@ -166,7 +166,7 @@ coding = "utf-8"
    bar.test.                  86400   IN NS      ns1.bar.test.
    bar.test.                  86400   IN NS      ns2.bar.test.
    ns1.bar.test.              86400   IN A       192.0.2.1
-   ns2.bar.test.              86400   IN A       2001:db8::2:2
+   ns2.bar.test.              86400   IN AAAA    2001:db8::2:2
 
    foo.test.                  86400   IN NS      ns1.bar.test.
    foo.test.                  86400   IN NS      ns2.bar.test.
@@ -185,7 +185,7 @@ coding = "utf-8"
 
    ;; ADDITIONAL SECTION:
    ns1.bar.test.           86400	IN	A	192.0.2.1
-   ns2.bar.test.           86400	IN	A	2001:db8::2:2
+   ns2.bar.test.           86400	IN	AAAA	2001:db8::2:2
 ~~~
 
 ## Missing glue
