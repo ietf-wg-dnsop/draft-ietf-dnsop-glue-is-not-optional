@@ -239,15 +239,16 @@ coding = "utf-8"
 ## In-Domain Glue
 
    This document clarifies that when a name server generates a referral
-   response, it MUST either include all in-domain glue records in the
-   additional section, or MUST set TC=1.
+   response, it MUST include all available in-domain glue records in the
+   additional section. If all in-domain glue records do not fit in a UDP response,
+   the name server MUST set TC=1.
 
 ## Sibling Glue
 
    This document clarifies that when a name server generates a referral
-   response, it SHOULD include available sibling glue records in the
-   additional section.  If sibling glue records do not fit in the
-   response, the name server is NOT REQUIRED to set TC=1.
+   response, it MUST [SHOULD] include available sibling glue records in the
+   additional section.  If all sibling glue records do not fit in a UDP response,
+   the name server MUST [is NOT REQUIRED to] set TC=1.
 
 ## Updates to RFC 1034
 
