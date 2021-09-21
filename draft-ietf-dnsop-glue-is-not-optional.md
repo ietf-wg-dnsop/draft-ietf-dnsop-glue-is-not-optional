@@ -190,27 +190,27 @@ coding = "utf-8"
 
 ## Missing glue
 
-   [missing glue isn't really a type of glue, so we'll need to think about this]
+   An example of missing glue is included here, even though it is not
+   really a type of glue.  While not common, real examples of responses
+   that lack required glue, and with TC=0, have been shown to occur and
+   cause resolution failures.
 
-   While not common, real life examples of servers that fail to set TC=1
-   when glue records are available, exist and they do cause resolution
-   failures.
-
-   The example below from June 2020 shows a case where none of
-   the glue records, present in the zone, fitted into the available space and
-   TC=1 was not set in the response.  While this example shows an DNSSEC
-   [@RFC4033], [@RFC4034], [@RFC4035] referral response, this behaviour has
-   also been seen with plain DNS responses as well.  The records have
+   The example below is based on a response observed in June 2020.  The names have
+   been altered to fall under documentation domains.  It shows a case where none of
+   the glue records present in the zone fit into the available space of the UDP respose, and
+   TC=1 was not set.  While this example shows a referral with DNSSEC records
+   [@RFC4033], [@RFC4034], [@RFC4035], this behaviour has
+   been seen with plain DNS responses as well.  Some records have
    been truncated for display purposes. Note that at the time of this
-   writing, this configuration has been corrected and the response correctly
-   sets the TC=1 flag.
+   writing, the servers originally responsible for this example have been updated and now correctly
+   set the TC=1 flag.
 
 ~~~
-   % dig +norec +dnssec +bufsize=512 +ignore @a.gov-servers.net \
-          rh202ns2.355.dhhs.gov
+   % dig +norec +dnssec +bufsize=512 +ignore @ns.example.net \
+          rh202ns2.355.foo.example
 
    ; <<>> DiG 9.15.4 <<>> +norec +dnssec +bufsize +ignore \
-          @a.gov-servers.net rh202ns2.355.dhhs.gov
+          @ns.example.net rh202ns2.355.foo.example
    ; (2 servers found)
    ;; global options: +cmd
    ;; Got answer:
@@ -220,18 +220,18 @@ coding = "utf-8"
    ;; OPT PSEUDOSECTION:
    ; EDNS: version: 0, flags: do; udp: 4096
    ;; QUESTION SECTION:
-   ;rh202ns2.355.dhhs.gov.         IN A
+   ;rh202ns2.355.foo.example.         IN A
 
    ;; AUTHORITY SECTION:
-   dhhs.gov.               86400   IN NS      rh120ns2.368.dhhs.gov.
-   dhhs.gov.               86400   IN NS      rh202ns2.355.dhhs.gov.
-   dhhs.gov.               86400   IN NS      rh120ns1.368.dhhs.gov.
-   dhhs.gov.               86400   IN NS      rh202ns1.355.dhhs.gov.
-   dhhs.gov.               3600    IN DS      51937 8 1 ...
-   dhhs.gov.               3600    IN DS      635 8 2 ...
-   dhhs.gov.               3600    IN DS      51937 8 2 ...
-   dhhs.gov.               3600    IN DS      635 8 1 ...
-   dhhs.gov.               3600    IN RRSIG   DS 8 2 3600 ...
+   foo.example.          86400   IN NS      rh120ns2.368.foo.example.
+   foo.example.          86400   IN NS      rh202ns2.355.foo.example.
+   foo.example.          86400   IN NS      rh120ns1.368.foo.example.
+   foo.example.          86400   IN NS      rh202ns1.355.foo.example.
+   foo.example.          3600    IN DS      51937 8 1 ...
+   foo.example.          3600    IN DS      635 8 2 ...
+   foo.example.          3600    IN DS      51937 8 2 ...
+   foo.example.          3600    IN DS      635 8 1 ...
+   foo.example.          3600    IN RRSIG   DS 8 2 3600 ...
 ~~~
 
 # Requirements
