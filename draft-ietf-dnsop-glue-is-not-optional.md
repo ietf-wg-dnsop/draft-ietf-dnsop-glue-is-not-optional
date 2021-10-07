@@ -188,6 +188,46 @@ coding = "utf-8"
    ns2.bar.test.           86400	IN	AAAA	2001:db8::2:2
 ~~~
 
+##  Sibling Cyclic Glue {#siblingcyclicglue}
+
+   The use of sibling glue can introduce cyclic dependencies.  This
+   happens when one domain specifies name servers from a sibling domain,
+   and vice versa.  This type of cyclic dependency can only be
+   broken when the delegating name server includes the sibling
+   glue in a referral response.
+
+   Here the delegating zone "test" contains 2 sub-delegations for the
+   subzones "bar.test" and "foo.test", and each use name servers under
+   the other:
+
+~~~
+   bar.test.                  86400   IN NS      ns1.foo.test.
+   bar.test.                  86400   IN NS      ns2.foo.test.
+   ns1.bar.test.              86400   IN A       192.0.2.1
+   ns2.bar.test.              86400   IN AAAA    2001:db8::2:2
+
+   foo.test.                  86400   IN NS      ns1.bar.test.
+   foo.test.                  86400   IN NS      ns2.bar.test.
+   ns1.foo.test.              86400   IN A       192.0.2.3
+   ns2.foo.test.              86400   IN AAAA    2001:db8::2:4
+~~~
+
+  A referral response from "test" for "bar.test" with sibling glue
+  looks like this:
+
+~~~
+   ;; QUESTION SECTION:
+   ;www.bar.test.  	IN	A
+
+   ;; AUTHORITY SECTION:
+   bar.test.               86400	IN	NS	ns1.foo.test.
+   bar.test.               86400	IN	NS	ns2.foo.test.
+
+   ;; ADDITIONAL SECTION:
+   ns1.foo.test.           86400	IN	A	192.0.2.3
+   ns2.foo.test.           86400	IN	AAAA	2001:db8::2:4
+~~~
+
 ## Missing glue
 
    An example of missing glue is included here, even though it is not
