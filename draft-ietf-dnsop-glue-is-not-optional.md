@@ -349,6 +349,7 @@ coding = "utf-8"
   - Reorganized with section 2 as Types of Glue and section 3 as Requirements.
   - Removed any discussion of promoted / orphan glue.
   - Use appropriate documentation addresses and domain names.
+  - Added Sibling Cyclic Glue section
 
 {backmatter}
 
