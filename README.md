@@ -15,7 +15,7 @@ Expires: 14 April 2022                                        P. Wouters
 
 
              Glue In DNS Referral Responses Is Not Optional
-                draft-ietf-dnsop-glue-is-not-optional-02
+                draft-ietf-dnsop-glue-is-not-optional-03
 
 Abstract
 
