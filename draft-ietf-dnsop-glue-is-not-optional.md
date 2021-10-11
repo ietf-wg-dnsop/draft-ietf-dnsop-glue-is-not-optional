@@ -344,12 +344,17 @@ coding = "utf-8"
 
   From -01 to -02:
 
-  - Clarified requirement to include *all* glue or set TC=1.
+  - Clarified that "servers" means "authoritative servers".
+  - Clarified that "available glue" means "all available glue".
+  - Updated examples and placed before RFC 1034 update.
+
+  From -02 to -03:
+
   - Clarified scope to focus only on name server responses, and not zone/registry data.
   - Reorganized with section 2 as Types of Glue and section 3 as Requirements.
   - Removed any discussion of promoted / orphan glue.
   - Use appropriate documentation addresses and domain names.
-  - Added Sibling Cyclic Glue section
+  - Added Sibling Cyclic Glue example.
 
 {backmatter}
 
