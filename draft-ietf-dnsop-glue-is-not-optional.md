@@ -1,5 +1,5 @@
 %%%
-title = "Glue In DNS Referral Responses Is Not Optional"
+title = "DNS Referral Glue Is Not Optional"
 docName = "@DOCNAME@"
 category = "std"
 updates = [1034]
@@ -71,11 +71,11 @@ coding = "utf-8"
 
 .# Abstract
 
-   The DNS uses glue records to allow iterative clients to find the
+   The DNS uses referral glue records to allow iterative clients to find the
    addresses of nameservers that are contained within a delegated zone.
-   Authoritative Servers are expected to return all available glue records
-   in referrals. If message size constraints prevent the inclusion of all
-   glue records in a UDP response, the server MUST set the TC flag to
+   Authoritative Servers are expected to return all available referral glue records
+   in a referral response. If message size constraints prevent the inclusion of all
+   referral glue records over UDP transport, the server MUST set the TC flag to
    inform the client that the response is incomplete, and that the client
    SHOULD use TCP to retrieve the full response.
    This document updates RFC 1034 to clarify correct server behavior.
@@ -85,22 +85,31 @@ coding = "utf-8"
 
 # Introduction
 
-   The Domain Name System (DNS) [@!RFC1034], [@!RFC1035] uses glue records
+   The Domain Name System (DNS) [@!RFC1034], [@!RFC1035] uses referral glue records
    to allow iterative clients to find the addresses of nameservers that are
-   contained within a delegated zone. Glue records are added to the parent
+   contained within a delegated zone. Referral glue records are added to the parent
    zone as part of the delegation process and returned in referral responses,
    otherwise a resolver following the referral has no way of finding these
    addresses. Authoritative servers are expected to return all available
-   glue records in referrals. If message size constraints prevent the
-   inclusion of all glue records in a UDP response, the server MUST set the
+   referral glue records in a referral response. If message size constraints prevent the
+   inclusion of all glue records over UDP transport, the server MUST set the
    TC (Truncated) flag to inform the client that the response is incomplete,
    and that the client SHOULD use TCP to retrieve the full response. This
    document clarifies that expectation.
 
    DNS responses sometimes contain optional data in the additional
-   section. Glue records however are not optional. Several other
+   section. Referral glue records, however, are not optional. Several other
    protocol extensions, when used, are also not optional. This
    includes TSIG [@RFC2845], OPT [@RFC6891], and SIG(0) [@RFC2931].
+
+   At the time of this writing, referral glue is the only type of
+   glue defined for the DNS.  Referral glue records are always
+   addresses (A or AAAA records) of a delegation's authoritative
+   name servers.  New work underway in the IETF may lead to definitions
+   for other types of glue data, with requirements that differ from
+   referral glue.  This document only describes requirements for
+   referral glue.  Unless stated otherwise, "glue" in the remainder of this document
+   always means "referral glue."
 
    Note that this document only clarifies requirements of name server
    software implementations.  It does not place any requirements on
@@ -112,14 +121,14 @@ coding = "utf-8"
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in [@!RFC2119].
 
-# Types of Glue
+# Types of Referral Glue
 
    This section describes different types of glue that may be found in
    DNS referral responses.  Note that the type of glue depends on 
    the QNAME.  A particular record can be in-domain glue for one response
    and sibling glue for another.
 
-## In-Domain Glue {#indomainglue}
+## In-Domain Referral Glue {#indomainglue}
 
    The following is a simple example of glue records present in the
    delegating zone "test" for the child zone "foo.test". The nameservers
@@ -149,7 +158,7 @@ coding = "utf-8"
    ns2.foo.test.           86400	IN	AAAA	2001:db8::2:2
 ~~~
 
-##  Sibling Glue {#siblingglue}
+##  Sibling Referral Glue {#siblingglue}
 
    Sibling glue are glue records that are not contained in the delegated
    zone itself, but in another delegated zone from the same parent. In many
@@ -188,7 +197,7 @@ coding = "utf-8"
    ns2.bar.test.           86400	IN	AAAA	2001:db8::2:2
 ~~~
 
-##  Sibling Cyclic Glue {#siblingcyclicglue}
+##  Cyclic Sibling Referral Glue {#siblingcyclicglue}
 
    The use of sibling glue can introduce cyclic dependencies.  This
    happens when one domain specifies name servers from a sibling domain,
@@ -228,7 +237,7 @@ coding = "utf-8"
    ns2.foo.test.           86400	IN	AAAA	2001:db8::2:4
 ~~~
 
-## Missing glue
+## Missing Referral Glue
 
    An example of missing glue is included here, even though it is not
    really a type of glue.  While not common, real examples of responses
@@ -276,14 +285,14 @@ coding = "utf-8"
 
 # Requirements
 
-## In-Domain Glue
+## In-Domain Referral Glue
 
    This document clarifies that when a name server generates a referral
    response, it MUST include all available in-domain glue records in the
    additional section. If all in-domain glue records do not fit in a UDP response,
    the name server MUST set TC=1.
 
-## Sibling Glue
+## Sibling Referral Glue
 
    This document clarifies that when a name server generates a referral
    response, it MUST [SHOULD] include available sibling glue records in the
@@ -355,6 +364,10 @@ coding = "utf-8"
   - Removed any discussion of promoted / orphan glue.
   - Use appropriate documentation addresses and domain names.
   - Added Sibling Cyclic Glue example.
+
+  From -03 to -04:
+
+  - Use "referral glue" on the assumption that other types of glue may be defined in the future.
 
 {backmatter}
 
