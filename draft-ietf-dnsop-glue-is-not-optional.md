@@ -314,6 +314,15 @@ coding = "utf-8"
    This document clarifies correct DNS server behaviour and does not introduce
    any changes or new security considerations.
 
+#  Operational Considerations
+
+   At the time of this writing, the behavior of most DNS server
+   implementations is to set the TC flag only if none of the available
+   glue records fit in a response over UDP transport.  The updated
+   requirements in this document might lead to an increase in the fraction
+   of UDP responses with the TC flag set, and consequently an increase
+   in the number of queries to over TCP transport.
+
 #   IANA Considerations
 
    There are no actions for IANA.
