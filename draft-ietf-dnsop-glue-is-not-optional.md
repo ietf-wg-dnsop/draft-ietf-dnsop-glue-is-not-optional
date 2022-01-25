@@ -377,6 +377,8 @@ coding = "utf-8"
   From -03 to -04:
 
   - Use "referral glue" on the assumption that other types of glue may be defined in the future.
+  - Added Operational Considerations section.
+  - Note many current implementations set TC=1 only when no glue RRs fit.  New requirements may lead to more truncation and TCP.
 
 {backmatter}
 

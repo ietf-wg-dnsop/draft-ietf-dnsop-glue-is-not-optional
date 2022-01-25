@@ -7,11 +7,11 @@ DNSOP                                                         M. Andrews
 Internet-Draft                                                       ISC
 Updates: 1034 (if approved)                                     S. Huque
 Intended status: Standards Track                              Salesforce
-Expires: 9 July 2022                                          P. Wouters
+Expires: 29 July 2022                                         P. Wouters
                                                                    Aiven
                                                               D. Wessels
                                                                 Verisign
-                                                          5 January 2022
+                                                         25 January 2022
 
 
                    DNS Referral Glue Is Not Optional
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 July 2022.
+   This Internet-Draft will expire on 29 July 2022.
 
 Copyright Notice
 
@@ -54,7 +54,7 @@ Copyright Notice
 
 
 
-Andrews, et al.            Expires 9 July 2022                  [Page 1]
+Andrews, et al.           Expires 29 July 2022                  [Page 1]
 
 Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
@@ -87,7 +87,7 @@ Table of Contents
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   7
    8.  Changes . . . . . . . . . . . . . . . . . . . . . . . . . . .   7
    9.  Normative References  . . . . . . . . . . . . . . . . . . . .   8
-   10. Informative References  . . . . . . . . . . . . . . . . . . .   8
+   10. Informative References  . . . . . . . . . . . . . . . . . . .   9
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   9
 
 1.  Introduction
@@ -110,7 +110,7 @@ Table of Contents
 
 
 
-Andrews, et al.            Expires 9 July 2022                  [Page 2]
+Andrews, et al.           Expires 29 July 2022                  [Page 2]
 
 Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
@@ -166,7 +166,7 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
 
 
-Andrews, et al.            Expires 9 July 2022                  [Page 3]
+Andrews, et al.           Expires 29 July 2022                  [Page 3]
 
 Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
@@ -222,7 +222,7 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
 
 
-Andrews, et al.            Expires 9 July 2022                  [Page 4]
+Andrews, et al.           Expires 29 July 2022                  [Page 4]
 
 Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
@@ -278,7 +278,7 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
 
 
-Andrews, et al.            Expires 9 July 2022                  [Page 5]
+Andrews, et al.           Expires 29 July 2022                  [Page 5]
 
 Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
@@ -334,7 +334,7 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
 
 
-Andrews, et al.            Expires 9 July 2022                  [Page 6]
+Andrews, et al.           Expires 29 July 2022                  [Page 6]
 
 Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
@@ -390,7 +390,7 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
 
 
-Andrews, et al.            Expires 9 July 2022                  [Page 7]
+Andrews, et al.           Expires 29 July 2022                  [Page 7]
 
 Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
@@ -425,6 +425,11 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
    *  Use "referral glue" on the assumption that other types of glue may
       be defined in the future.
 
+   *  Added Operational Considerations section.
+
+   *  Note many current implementations set TC=1 only when no glue RRs
+      fit.  New requirements may lead to more truncation and TCP.
+
 9.  Normative References
 
    [RFC1034]  Mockapetris, P., "Domain names - concepts and facilities",
@@ -437,19 +442,19 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
+
+
+
+
+Andrews, et al.           Expires 29 July 2022                  [Page 8]
+
+Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
+
+
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
 10.  Informative References
-
-
-
-
-
-Andrews, et al.            Expires 9 July 2022                  [Page 8]
-
-Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
-
 
    [RFC2845]  Vixie, P., Gudmundsson, O., Eastlake 3rd, D., and B.
               Wellington, "Secret Key Transaction Authentication for DNS
@@ -494,17 +499,18 @@ Authors' Addresses
    Email: shuque@gmail.com
 
 
+
+
+
+Andrews, et al.           Expires 29 July 2022                  [Page 9]
+
+Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
+
+
    Paul Wouters
    Aiven
 
    Email: paul.wouters@aiven.io
-
-
-
-
-Andrews, et al.            Expires 9 July 2022                  [Page 9]
-
-Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
 
    Duane Wessels
@@ -552,11 +558,5 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
 
 
-
-
-
-
-
-
-Andrews, et al.            Expires 9 July 2022                 [Page 10]
+Andrews, et al.           Expires 29 July 2022                 [Page 10]
 ```
