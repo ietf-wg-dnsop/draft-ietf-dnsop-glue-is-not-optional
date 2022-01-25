@@ -289,19 +289,17 @@ coding = "utf-8"
 
    This document clarifies that when a name server generates a referral
    response, it MUST include all available in-domain glue records in the
-   additional section. If all in-domain glue records do not fit in a UDP response,
+   additional section. If all in-domain glue records do not fit in a response over UDP transport,
    the name server MUST set TC=1.
 
 ## Sibling Referral Glue
 
    This document clarifies that when a name server generates a referral
-   response, it MUST [SHOULD] include available sibling glue records in the
-   additional section.  If all sibling glue records do not fit in a UDP response,
-   the name server MUST [is NOT REQUIRED to] set TC=1.
+   response, it SHOULD include all available sibling glue records in the
+   additional section.  If all sibling glue records do not fit in a response over UDP transport,
+   the name server is NOT REQUIRED to set TC=1.
 
 ## Updates to RFC 1034
-
-   [this doesn't really account for SHOULD on sibling glue...]
 
    Replace
 
@@ -313,9 +311,9 @@ coding = "utf-8"
    with
 
    "Copy the NS RRs for the subzone into the authority section of the
-   reply.  Put whatever addresses are available into the additional
+   reply.  Put whatever NS addresses are available into the additional
    section, using glue RRs if the addresses are not available from
-   authoritative data or the cache.  If all glue RRs do not fit, set TC=1 in
+   authoritative data or the cache.  If all in-domain glue RRs do not fit, set TC=1 in
    the header.  Go to step 4."
 
 #  Security Considerations
@@ -379,6 +377,7 @@ coding = "utf-8"
   - Use "referral glue" on the assumption that other types of glue may be defined in the future.
   - Added Operational Considerations section.
   - Note many current implementations set TC=1 only when no glue RRs fit.  New requirements may lead to more truncation and TCP.
+  - Sibling glue can be optional.  Only require TC=1 when all in-domain glue RRs don't fit.
 
 {backmatter}
 
