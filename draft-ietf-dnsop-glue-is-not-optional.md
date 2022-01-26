@@ -1,5 +1,5 @@
 %%%
-title = "DNS Referral Glue Is Not Optional"
+title = "DNS Referral Glue Requirements"
 docName = "@DOCNAME@"
 category = "std"
 updates = [1034]
@@ -75,7 +75,7 @@ coding = "utf-8"
    addresses of nameservers that are contained within a delegated zone.
    Authoritative Servers are expected to return all available referral glue records
    in a referral response. If message size constraints prevent the inclusion of all
-   referral glue records over UDP transport, the server MUST set the TC flag to
+   in-domain referral glue records over UDP transport, the server MUST set the TC flag to
    inform the client that the response is incomplete, and that the client
    SHOULD use TCP to retrieve the full response.
    This document updates RFC 1034 to clarify correct server behavior.
@@ -91,14 +91,14 @@ coding = "utf-8"
    zone as part of the delegation process and returned in referral responses,
    otherwise a resolver following the referral has no way of finding these
    addresses. Authoritative servers are expected to return all available
-   referral glue records in a referral response. If message size constraints prevent the
-   inclusion of all glue records over UDP transport, the server MUST set the
+   in-domain referral glue records in a referral response. If message size constraints prevent the
+   inclusion of all in-domain glue records over UDP transport, the server MUST set the
    TC (Truncated) flag to inform the client that the response is incomplete,
    and that the client SHOULD use TCP to retrieve the full response. This
    document clarifies that expectation.
 
    DNS responses sometimes contain optional data in the additional
-   section. Referral glue records, however, are not optional. Several other
+   section. In-domain referral glue records, however, are not optional. Several other
    protocol extensions, when used, are also not optional. This
    includes TSIG [@RFC2845], OPT [@RFC6891], and SIG(0) [@RFC2931].
 
@@ -237,6 +237,11 @@ coding = "utf-8"
    ns2.foo.test.           86400	IN	AAAA	2001:db8::2:4
 ~~~
 
+   In late 2021 the authors analyzed zone file data available from ICANN's
+   Centralized Zone Data Service [@CZDS] and found 222 out of approximately
+   209,000,000 total delegations that had only sibling NS RRs in a cyclic
+   dependency as above.
+
 ## Missing Referral Glue
 
    An example of missing glue is included here, even though it is not
@@ -298,6 +303,10 @@ coding = "utf-8"
    response, it SHOULD include all available sibling glue records in the
    additional section.  If all sibling glue records do not fit in a response over UDP transport,
    the name server is NOT REQUIRED to set TC=1.
+
+   Note that users may experience resolution failures for domains with only sibing glue
+   when a name servers chooses to omit them in a referral response.  As described in 
+   (#siblingcyclicglue) such domains are rare.
 
 ## Updates to RFC 1034
 
@@ -382,3 +391,14 @@ coding = "utf-8"
 {backmatter}
 
 {numbered="false"}
+
+<reference anchor="CZDS" target="https://czds.icann.org/">
+   <front>
+      <title>Centralized Zone Data Service</title>
+      <author>
+         <organization>ICANN</organization>
+      </author>
+      <date year="2022" month="January"></date>
+   </front>
+</reference>
+
