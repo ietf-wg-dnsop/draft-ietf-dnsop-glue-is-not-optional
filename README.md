@@ -7,11 +7,11 @@ DNSOP                                                         M. Andrews
 Internet-Draft                                                       ISC
 Updates: 1034 (if approved)                                     S. Huque
 Intended status: Standards Track                              Salesforce
-Expires: 31 July 2022                                         P. Wouters
+Expires: 4 August 2022                                        P. Wouters
                                                                    Aiven
                                                               D. Wessels
                                                                 Verisign
-                                                         27 January 2022
+                                                         31 January 2022
 
 
                      DNS Referral Glue Requirements
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 July 2022.
+   This Internet-Draft will expire on 4 August 2022.
 
 Copyright Notice
 
@@ -54,7 +54,7 @@ Copyright Notice
 
 
 
-Andrews, et al.           Expires 31 July 2022                  [Page 1]
+Andrews, et al.           Expires 4 August 2022                 [Page 1]
 
 Internet-Draft       DNS Referral Glue Requirements         January 2022
 
@@ -78,12 +78,12 @@ Table of Contents
      2.3.  Cyclic Sibling Referral Glue  . . . . . . . . . . . . . .   5
      2.4.  Missing Referral Glue . . . . . . . . . . . . . . . . . .   5
    3.  Requirements  . . . . . . . . . . . . . . . . . . . . . . . .   6
-     3.1.  In-Domain Referral Glue . . . . . . . . . . . . . . . . .   6
+     3.1.  In-Domain Referral Glue . . . . . . . . . . . . . . . . .   7
      3.2.  Sibling Referral Glue . . . . . . . . . . . . . . . . . .   7
      3.3.  Updates to RFC 1034 . . . . . . . . . . . . . . . . . . .   7
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
-   5.  Operational Considerations  . . . . . . . . . . . . . . . . .   7
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
+   5.  Operational Considerations  . . . . . . . . . . . . . . . . .   8
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   8
    8.  Changes . . . . . . . . . . . . . . . . . . . . . . . . . . .   8
    9.  Normative References  . . . . . . . . . . . . . . . . . . . .   9
@@ -110,7 +110,7 @@ Table of Contents
 
 
 
-Andrews, et al.           Expires 31 July 2022                  [Page 2]
+Andrews, et al.           Expires 4 August 2022                 [Page 2]
 
 Internet-Draft       DNS Referral Glue Requirements         January 2022
 
@@ -166,7 +166,7 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
 
 
 
-Andrews, et al.           Expires 31 July 2022                  [Page 3]
+Andrews, et al.           Expires 4 August 2022                 [Page 3]
 
 Internet-Draft       DNS Referral Glue Requirements         January 2022
 
@@ -185,16 +185,16 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
 2.2.  Sibling Referral Glue
 
    Sibling glue are glue records that are not contained in the delegated
-   zone itself, but in another delegated zone from the same parent.  In
+   zone itself, but in another zone delegated from the same parent.  In
    many cases, these are not strictly required for resolution, since the
-   resolver can make follow-on queries to the same zone to resolve the
+   resolver can make follow-on queries to the other zone to resolve the
    nameserver addresses after following the referral to the sibling
    zone.  However, most nameserver implementations today provide them as
    an optimization to obviate the need for extra traffic from iterative
    resolvers.
 
-   Here the delegating zone "test" contains 2 sub-delegations for the
-   subzones "bar.test" and "foo.test":
+   Here the delegating zone "test" contains two delegations for the
+   child zones "bar.test" and "foo.test":
 
       bar.test.                  86400   IN NS      ns1.bar.test.
       bar.test.                  86400   IN NS      ns2.bar.test.
@@ -222,7 +222,7 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
 
 
 
-Andrews, et al.           Expires 31 July 2022                  [Page 4]
+Andrews, et al.           Expires 4 August 2022                 [Page 4]
 
 Internet-Draft       DNS Referral Glue Requirements         January 2022
 
@@ -235,9 +235,9 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
    when the delegating name server includes the sibling glue in a
    referral response.
 
-   Here the delegating zone "test" contains 2 sub-delegations for the
-   subzones "bar.test" and "foo.test", and each use name servers under
-   the other:
+   Here the delegating zone "test" contains two delegations for the
+   child zones "bar.test" and "foo.test", and each use name servers
+   under the other:
 
       bar.test.                  86400   IN NS      ns1.foo.test.
       bar.test.                  86400   IN NS      ns2.foo.test.
@@ -278,7 +278,7 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
 
 
 
-Andrews, et al.           Expires 31 July 2022                  [Page 5]
+Andrews, et al.           Expires 4 August 2022                 [Page 5]
 
 Internet-Draft       DNS Referral Glue Requirements         January 2022
 
@@ -286,13 +286,13 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
    The example below is based on a response observed in June 2020.  The
    names have been altered to fall under documentation domains.  It
    shows a case where none of the glue records present in the zone fit
-   into the available space of the UDP respose, and TC=1 was not set.
-   While this example shows a referral with DNSSEC records [RFC4033],
-   [RFC4034], [RFC4035], this behaviour has been seen with plain DNS
-   responses as well.  Some records have been truncated for display
-   purposes.  Note that at the time of this writing, the servers
+   into the available space of the UDP respose, and the TC flag was not
+   set.  While this example shows a referral with DNSSEC records
+   [RFC4033], [RFC4034], [RFC4035], this behaviour has been seen with
+   plain DNS responses as well.  Some records have been truncated for
+   display purposes.  Note that at the time of this writing, the servers
    originally responsible for this example have been updated and now
-   correctly set the TC=1 flag.
+   correctly set the TC flag.
 
       % dig +norec +dnssec +bufsize=512 +ignore @ns.example.net \
              rh202ns2.355.foo.example
@@ -323,6 +323,22 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
 
 3.  Requirements
 
+   This section describes updated requirements for including glue in
+   referral responses.
+
+
+
+
+
+
+
+
+
+Andrews, et al.           Expires 4 August 2022                 [Page 6]
+
+Internet-Draft       DNS Referral Glue Requirements         January 2022
+
+
 3.1.  In-Domain Referral Glue
 
    This document clarifies that when a name server generates a referral
@@ -330,14 +346,6 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
    glue records in the additional section, or MUST set TC=1.  When a
    name server generates a referral response over TCP transport, it MUST
    include all available in-domain glue records.
-
-
-
-
-Andrews, et al.           Expires 31 July 2022                  [Page 6]
-
-Internet-Draft       DNS Referral Glue Requirements         January 2022
-
 
 3.2.  Sibling Referral Glue
 
@@ -374,6 +382,19 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
    This document clarifies correct DNS server behaviour and does not
    introduce any changes or new security considerations.
 
+
+
+
+
+
+
+
+
+Andrews, et al.           Expires 4 August 2022                 [Page 7]
+
+Internet-Draft       DNS Referral Glue Requirements         January 2022
+
+
 5.  Operational Considerations
 
    At the time of this writing, the behavior of most DNS server
@@ -386,14 +407,6 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
 6.  IANA Considerations
 
    There are no actions for IANA.
-
-
-
-
-Andrews, et al.           Expires 31 July 2022                  [Page 7]
-
-Internet-Draft       DNS Referral Glue Requirements         January 2022
-
 
 7.  Acknowledgements
 
@@ -431,6 +444,13 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
 
    *  Added Sibling Cyclic Glue example.
 
+
+
+Andrews, et al.           Expires 4 August 2022                 [Page 8]
+
+Internet-Draft       DNS Referral Glue Requirements         January 2022
+
+
    From -03 to -04:
 
    *  Use "referral glue" on the assumption that other types of glue may
@@ -443,13 +463,6 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
 
    *  Sibling glue can be optional.  Only require TC=1 when all in-
       domain glue RRs don't fit.
-
-
-
-Andrews, et al.           Expires 31 July 2022                  [Page 8]
-
-Internet-Draft       DNS Referral Glue Requirements         January 2022
-
 
 9.  Normative References
 
@@ -485,6 +498,15 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
               RFC 4033, DOI 10.17487/RFC4033, March 2005,
               <https://www.rfc-editor.org/info/rfc4033>.
 
+
+
+
+
+Andrews, et al.           Expires 4 August 2022                 [Page 9]
+
+Internet-Draft       DNS Referral Glue Requirements         January 2022
+
+
    [RFC4034]  Arends, R., Austein, R., Larson, M., Massey, D., and S.
               Rose, "Resource Records for the DNS Security Extensions",
               RFC 4034, DOI 10.17487/RFC4034, March 2005,
@@ -499,13 +521,6 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
               for DNS (EDNS(0))", STD 75, RFC 6891,
               DOI 10.17487/RFC6891, April 2013,
               <https://www.rfc-editor.org/info/rfc6891>.
-
-
-
-Andrews, et al.           Expires 31 July 2022                  [Page 9]
-
-Internet-Draft       DNS Referral Glue Requirements         January 2022
-
 
 Authors' Addresses
 
@@ -543,20 +558,5 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Andrews, et al.           Expires 31 July 2022                 [Page 10]
+Andrews, et al.           Expires 4 August 2022                [Page 10]
 ```
