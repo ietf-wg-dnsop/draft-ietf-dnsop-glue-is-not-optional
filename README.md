@@ -7,14 +7,14 @@ DNSOP                                                         M. Andrews
 Internet-Draft                                                       ISC
 Updates: 1034 (if approved)                                     S. Huque
 Intended status: Standards Track                              Salesforce
-Expires: 29 July 2022                                         P. Wouters
+Expires: 31 July 2022                                         P. Wouters
                                                                    Aiven
                                                               D. Wessels
                                                                 Verisign
-                                                         25 January 2022
+                                                         27 January 2022
 
 
-                   DNS Referral Glue Is Not Optional
+                     DNS Referral Glue Requirements
                 draft-ietf-dnsop-glue-is-not-optional-04
 
 Abstract
@@ -23,11 +23,11 @@ Abstract
    the addresses of nameservers that are contained within a delegated
    zone.  Authoritative Servers are expected to return all available
    referral glue records in a referral response.  If message size
-   constraints prevent the inclusion of all referral glue records over
-   UDP transport, the server MUST set the TC flag to inform the client
-   that the response is incomplete, and that the client SHOULD use TCP
-   to retrieve the full response.  This document updates RFC 1034 to
-   clarify correct server behavior.
+   constraints prevent the inclusion of all in-domain referral glue
+   records over UDP transport, the server MUST set the TC flag to inform
+   the client that the response is incomplete, and that the client
+   SHOULD use TCP to retrieve the full response.  This document updates
+   RFC 1034 to clarify correct server behavior.
 
 Status of This Memo
 
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 July 2022.
+   This Internet-Draft will expire on 31 July 2022.
 
 Copyright Notice
 
@@ -54,9 +54,9 @@ Copyright Notice
 
 
 
-Andrews, et al.           Expires 29 July 2022                  [Page 1]
+Andrews, et al.           Expires 31 July 2022                  [Page 1]
 
-Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
+Internet-Draft       DNS Referral Glue Requirements         January 2022
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -79,16 +79,16 @@ Table of Contents
      2.4.  Missing Referral Glue . . . . . . . . . . . . . . . . . .   5
    3.  Requirements  . . . . . . . . . . . . . . . . . . . . . . . .   6
      3.1.  In-Domain Referral Glue . . . . . . . . . . . . . . . . .   6
-     3.2.  Sibling Referral Glue . . . . . . . . . . . . . . . . . .   6
+     3.2.  Sibling Referral Glue . . . . . . . . . . . . . . . . . .   7
      3.3.  Updates to RFC 1034 . . . . . . . . . . . . . . . . . . .   7
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
    5.  Operational Considerations  . . . . . . . . . . . . . . . . .   7
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   7
-   8.  Changes . . . . . . . . . . . . . . . . . . . . . . . . . . .   7
-   9.  Normative References  . . . . . . . . . . . . . . . . . . . .   8
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   8
+   8.  Changes . . . . . . . . . . . . . . . . . . . . . . . . . . .   8
+   9.  Normative References  . . . . . . . . . . . . . . . . . . . .   9
    10. Informative References  . . . . . . . . . . . . . . . . . . .   9
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   9
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
 
 1.  Introduction
 
@@ -98,27 +98,27 @@ Table of Contents
    glue records are added to the parent zone as part of the delegation
    process and returned in referral responses, otherwise a resolver
    following the referral has no way of finding these addresses.
-   Authoritative servers are expected to return all available referral
-   glue records in a referral response.  If message size constraints
-   prevent the inclusion of all glue records over UDP transport, the
-   server MUST set the TC (Truncated) flag to inform the client that the
-   response is incomplete, and that the client SHOULD use TCP to
-   retrieve the full response.  This document clarifies that
-   expectation.
+   Authoritative servers are expected to return all available in-domain
+   referral glue records in a referral response.  If message size
+   constraints prevent the inclusion of all in-domain glue records over
+   UDP transport, the server MUST set the TC (Truncated) flag to inform
+   the client that the response is incomplete, and that the client
+   SHOULD use TCP to retrieve the full response.  This document
+   clarifies that expectation.
 
 
 
 
 
-Andrews, et al.           Expires 29 July 2022                  [Page 2]
+Andrews, et al.           Expires 31 July 2022                  [Page 2]
 
-Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
+Internet-Draft       DNS Referral Glue Requirements         January 2022
 
 
    DNS responses sometimes contain optional data in the additional
-   section.  Referral glue records, however, are not optional.  Several
-   other protocol extensions, when used, are also not optional.  This
-   includes TSIG [RFC2845], OPT [RFC6891], and SIG(0) [RFC2931].
+   section.  In-domain referral glue records, however, are not optional.
+   Several other protocol extensions, when used, are also not optional.
+   This includes TSIG [RFC2845], OPT [RFC6891], and SIG(0) [RFC2931].
 
    At the time of this writing, referral glue is the only type of glue
    defined for the DNS.  Referral glue records are always addresses (A
@@ -166,9 +166,9 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
 
 
-Andrews, et al.           Expires 29 July 2022                  [Page 3]
+Andrews, et al.           Expires 31 July 2022                  [Page 3]
 
-Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
+Internet-Draft       DNS Referral Glue Requirements         January 2022
 
 
       ;; QUESTION SECTION:
@@ -222,9 +222,9 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
 
 
-Andrews, et al.           Expires 29 July 2022                  [Page 4]
+Andrews, et al.           Expires 31 July 2022                  [Page 4]
 
-Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
+Internet-Draft       DNS Referral Glue Requirements         January 2022
 
 
 2.3.  Cyclic Sibling Referral Glue
@@ -263,6 +263,11 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
       ns1.foo.test.           86400        IN      A       192.0.2.3
       ns2.foo.test.           86400        IN      AAAA    2001:db8::2:4
 
+   In late 2021 the authors analyzed zone file data available from
+   ICANN's Centralized Zone Data Service [CZDS] and found 222 out of
+   approximately 209,000,000 total delegations that had only sibling NS
+   RRs in a cyclic dependency as above.
+
 2.4.  Missing Referral Glue
 
    An example of missing glue is included here, even though it is not
@@ -270,19 +275,19 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
    that lack required glue, and with TC=0, have been shown to occur and
    cause resolution failures.
 
+
+
+
+Andrews, et al.           Expires 31 July 2022                  [Page 5]
+
+Internet-Draft       DNS Referral Glue Requirements         January 2022
+
+
    The example below is based on a response observed in June 2020.  The
    names have been altered to fall under documentation domains.  It
    shows a case where none of the glue records present in the zone fit
    into the available space of the UDP respose, and TC=1 was not set.
    While this example shows a referral with DNSSEC records [RFC4033],
-
-
-
-Andrews, et al.           Expires 29 July 2022                  [Page 5]
-
-Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
-
-
    [RFC4034], [RFC4035], this behaviour has been seen with plain DNS
    responses as well.  Some records have been truncated for display
    purposes.  Note that at the time of this writing, the servers
@@ -321,27 +326,33 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 3.1.  In-Domain Referral Glue
 
    This document clarifies that when a name server generates a referral
-   response, it MUST include all available in-domain glue records in the
-   additional section.  If all in-domain glue records do not fit in a
-   UDP response, the name server MUST set TC=1.
+   response over UDP transport, it MUST include all available in-domain
+   glue records in the additional section, or MUST set TC=1.  When a
+   name server generates a referral response over TCP transport, it MUST
+   include all available in-domain glue records.
+
+
+
+
+Andrews, et al.           Expires 31 July 2022                  [Page 6]
+
+Internet-Draft       DNS Referral Glue Requirements         January 2022
+
 
 3.2.  Sibling Referral Glue
 
    This document clarifies that when a name server generates a referral
-   response, it MUST [SHOULD] include available sibling glue records in
-   the additional section.  If all sibling glue records do not fit in a
-   UDP response, the name server MUST [is NOT REQUIRED to] set TC=1.
+   response, it SHOULD include all available glue records in the
+   additional section.  If after adding all in-domain glue records, not
+   all sibling glue records fit in a response over UDP transport, the
+   name server is NOT REQUIRED to set TC=1.
 
-
-
-Andrews, et al.           Expires 29 July 2022                  [Page 6]
-
-Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
-
+   Note that users may experience resolution failures for domains with
+   only sibing glue when a name servers chooses to omit them in a
+   referral response.  As described in Section 2.3, such domains are
+   rare.
 
 3.3.  Updates to RFC 1034
-
-   [this doesn't really account for SHOULD on sibling glue...]
 
    Replace
 
@@ -353,10 +364,10 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
    with
 
    "Copy the NS RRs for the subzone into the authority section of the
-   reply.  Put whatever addresses are available into the additional
+   reply.  Put whatever NS addresses are available into the additional
    section, using glue RRs if the addresses are not available from
-   authoritative data or the cache.  If all glue RRs do not fit, set
-   TC=1 in the header.  Go to step 4."
+   authoritative data or the cache.  If all in-domain glue RRs do not
+   fit, set TC=1 in the header.  Go to step 4."
 
 4.  Security Considerations
 
@@ -376,6 +387,14 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
    There are no actions for IANA.
 
+
+
+
+Andrews, et al.           Expires 31 July 2022                  [Page 7]
+
+Internet-Draft       DNS Referral Glue Requirements         January 2022
+
+
 7.  Acknowledgements
 
    The authors wish to thank Joe Abley, Brian Dickson, Geoff Huston,
@@ -386,14 +405,6 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 8.  Changes
 
    RFC Editor: Please remove this section before publication.
-
-
-
-
-Andrews, et al.           Expires 29 July 2022                  [Page 7]
-
-Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
-
 
    This section lists substantial changes to the document as it is being
    worked on.
@@ -430,6 +441,16 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
    *  Note many current implementations set TC=1 only when no glue RRs
       fit.  New requirements may lead to more truncation and TCP.
 
+   *  Sibling glue can be optional.  Only require TC=1 when all in-
+      domain glue RRs don't fit.
+
+
+
+Andrews, et al.           Expires 31 July 2022                  [Page 8]
+
+Internet-Draft       DNS Referral Glue Requirements         January 2022
+
+
 9.  Normative References
 
    [RFC1034]  Mockapetris, P., "Domain names - concepts and facilities",
@@ -442,19 +463,13 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
-
-
-
-
-Andrews, et al.           Expires 29 July 2022                  [Page 8]
-
-Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
-
-
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
 10.  Informative References
+
+   [CZDS]     ICANN, "Centralized Zone Data Service", January 2022,
+              <https://czds.icann.org/>.
 
    [RFC2845]  Vixie, P., Gudmundsson, O., Eastlake 3rd, D., and B.
               Wellington, "Secret Key Transaction Authentication for DNS
@@ -485,6 +500,13 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
               DOI 10.17487/RFC6891, April 2013,
               <https://www.rfc-editor.org/info/rfc6891>.
 
+
+
+Andrews, et al.           Expires 31 July 2022                  [Page 9]
+
+Internet-Draft       DNS Referral Glue Requirements         January 2022
+
+
 Authors' Addresses
 
    M. Andrews
@@ -497,14 +519,6 @@ Authors' Addresses
    Salesforce
 
    Email: shuque@gmail.com
-
-
-
-
-
-Andrews, et al.           Expires 29 July 2022                  [Page 9]
-
-Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
 
    Paul Wouters
@@ -544,19 +558,5 @@ Internet-Draft      DNS Referral Glue Is Not Optional       January 2022
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Andrews, et al.           Expires 29 July 2022                 [Page 10]
+Andrews, et al.           Expires 31 July 2022                 [Page 10]
 ```
