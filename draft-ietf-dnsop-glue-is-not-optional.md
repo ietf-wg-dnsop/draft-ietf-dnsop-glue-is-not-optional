@@ -161,15 +161,15 @@ coding = "utf-8"
 ##  Sibling Referral Glue {#siblingglue}
 
    Sibling glue are glue records that are not contained in the delegated
-   zone itself, but in another delegated zone from the same parent. In many
+   zone itself, but in another zone delegated from the same parent. In many
    cases, these are not strictly required for resolution, since the resolver
-   can make follow-on queries to the same zone to resolve the nameserver
+   can make follow-on queries to the other zone to resolve the nameserver
    addresses after following the referral to the sibling zone. However,
    most nameserver implementations today provide them as an optimization
    to obviate the need for extra traffic from iterative resolvers.
 
-   Here the delegating zone "test" contains 2 sub-delegations for the
-   subzones "bar.test" and "foo.test":
+   Here the delegating zone "test" contains two delegations for the
+   child zones "bar.test" and "foo.test":
 
 ~~~
    bar.test.                  86400   IN NS      ns1.bar.test.
@@ -205,8 +205,8 @@ coding = "utf-8"
    broken when the delegating name server includes the sibling
    glue in a referral response.
 
-   Here the delegating zone "test" contains 2 sub-delegations for the
-   subzones "bar.test" and "foo.test", and each use name servers under
+   Here the delegating zone "test" contains two delegations for the
+   child zones "bar.test" and "foo.test", and each use name servers under
    the other:
 
 ~~~
