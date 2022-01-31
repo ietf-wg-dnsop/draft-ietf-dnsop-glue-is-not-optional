@@ -24,10 +24,10 @@ Abstract
    zone.  Authoritative Servers are expected to return all available
    referral glue records in a referral response.  If message size
    constraints prevent the inclusion of all in-domain referral glue
-   records over UDP transport, the server MUST set the TC flag to inform
-   the client that the response is incomplete, and that the client
-   SHOULD use TCP to retrieve the full response.  This document updates
-   RFC 1034 to clarify correct server behavior.
+   records, the server MUST set the TC flag to inform the client that
+   the response is incomplete, and that the client SHOULD use another
+   transport to retrieve the full response.  This document updates RFC
+   1034 to clarify correct server behavior.
 
 Status of This Memo
 
@@ -78,12 +78,12 @@ Table of Contents
      2.3.  Cyclic Sibling Referral Glue  . . . . . . . . . . . . . .   5
      2.4.  Missing Referral Glue . . . . . . . . . . . . . . . . . .   5
    3.  Requirements  . . . . . . . . . . . . . . . . . . . . . . . .   6
-     3.1.  In-Domain Referral Glue . . . . . . . . . . . . . . . . .   7
+     3.1.  In-Domain Referral Glue . . . . . . . . . . . . . . . . .   6
      3.2.  Sibling Referral Glue . . . . . . . . . . . . . . . . . .   7
      3.3.  Updates to RFC 1034 . . . . . . . . . . . . . . . . . . .   7
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
-   5.  Operational Considerations  . . . . . . . . . . . . . . . . .   8
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
+   5.  Operational Considerations  . . . . . . . . . . . . . . . . .   7
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   8
    8.  Changes . . . . . . . . . . . . . . . . . . . . . . . . . . .   8
    9.  Normative References  . . . . . . . . . . . . . . . . . . . .   9
@@ -101,10 +101,10 @@ Table of Contents
    Authoritative servers are expected to return all available in-domain
    referral glue records in a referral response.  If message size
    constraints prevent the inclusion of all in-domain glue records over
-   UDP transport, the server MUST set the TC (Truncated) flag to inform
-   the client that the response is incomplete, and that the client
-   SHOULD use TCP to retrieve the full response.  This document
-   clarifies that expectation.
+   the chosen transport, the server MUST set the TC (Truncated) flag to
+   inform the client that the response is incomplete, and that the
+   client SHOULD use another transport retrieve the full response.  This
+   document clarifies that expectation.
 
 
 
@@ -326,11 +326,11 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
    This section describes updated requirements for including glue in
    referral responses.
 
+3.1.  In-Domain Referral Glue
 
-
-
-
-
+   This document clarifies that when a name server generates a referral
+   response, it MUST include all available in-domain glue records in the
+   additional section, or MUST set TC=1 if constrained by message size.
 
 
 
@@ -339,20 +339,12 @@ Andrews, et al.           Expires 4 August 2022                 [Page 6]
 Internet-Draft       DNS Referral Glue Requirements         January 2022
 
 
-3.1.  In-Domain Referral Glue
-
-   This document clarifies that when a name server generates a referral
-   response over UDP transport, it MUST include all available in-domain
-   glue records in the additional section, or MUST set TC=1.  When a
-   name server generates a referral response over TCP transport, it MUST
-   include all available in-domain glue records.
-
 3.2.  Sibling Referral Glue
 
    This document clarifies that when a name server generates a referral
    response, it SHOULD include all available glue records in the
    additional section.  If after adding all in-domain glue records, not
-   all sibling glue records fit in a response over UDP transport, the
+   all sibling glue records fit due to size message constraints, the
    name server is NOT REQUIRED to set TC=1.
 
    Note that users may experience resolution failures for domains with
@@ -382,19 +374,6 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
    This document clarifies correct DNS server behavior and does not
    introduce any changes or new security considerations.
 
-
-
-
-
-
-
-
-
-Andrews, et al.           Expires 4 August 2022                 [Page 7]
-
-Internet-Draft       DNS Referral Glue Requirements         January 2022
-
-
 5.  Operational Considerations
 
    At the time of this writing, the behavior of most DNS server
@@ -407,6 +386,14 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
 6.  IANA Considerations
 
    There are no actions for IANA.
+
+
+
+
+Andrews, et al.           Expires 4 August 2022                 [Page 7]
+
+Internet-Draft       DNS Referral Glue Requirements         January 2022
+
 
 7.  Acknowledgements
 
@@ -444,13 +431,6 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
 
    *  Added Sibling Cyclic Glue example.
 
-
-
-Andrews, et al.           Expires 4 August 2022                 [Page 8]
-
-Internet-Draft       DNS Referral Glue Requirements         January 2022
-
-
    From -03 to -04:
 
    *  Use "referral glue" on the assumption that other types of glue may
@@ -463,6 +443,17 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
 
    *  Sibling glue can be optional.  Only require TC=1 when all in-
       domain glue RRs don't fit.
+
+
+
+Andrews, et al.           Expires 4 August 2022                 [Page 8]
+
+Internet-Draft       DNS Referral Glue Requirements         January 2022
+
+
+   *  Avoid talking about requirements for UDP/TCP specifically, and
+      talk more generically about message size constraints regardless of
+      transport.
 
 9.  Normative References
 
@@ -498,15 +489,6 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
               RFC 4033, DOI 10.17487/RFC4033, March 2005,
               <https://www.rfc-editor.org/info/rfc4033>.
 
-
-
-
-
-Andrews, et al.           Expires 4 August 2022                 [Page 9]
-
-Internet-Draft       DNS Referral Glue Requirements         January 2022
-
-
    [RFC4034]  Arends, R., Austein, R., Larson, M., Massey, D., and S.
               Rose, "Resource Records for the DNS Security Extensions",
               RFC 4034, DOI 10.17487/RFC4034, March 2005,
@@ -516,6 +498,14 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
               Rose, "Protocol Modifications for the DNS Security
               Extensions", RFC 4035, DOI 10.17487/RFC4035, March 2005,
               <https://www.rfc-editor.org/info/rfc4035>.
+
+
+
+
+Andrews, et al.           Expires 4 August 2022                 [Page 9]
+
+Internet-Draft       DNS Referral Glue Requirements         January 2022
+
 
    [RFC6891]  Damas, J., Graff, M., and P. Vixie, "Extension Mechanisms
               for DNS (EDNS(0))", STD 75, RFC 6891,
@@ -546,6 +536,16 @@ Authors' Addresses
    Verisign
 
    Email: dwessels@verisign.com
+
+
+
+
+
+
+
+
+
+
 
 
 

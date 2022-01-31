@@ -75,9 +75,9 @@ coding = "utf-8"
    addresses of nameservers that are contained within a delegated zone.
    Authoritative Servers are expected to return all available referral glue records
    in a referral response. If message size constraints prevent the inclusion of all
-   in-domain referral glue records over UDP transport, the server MUST set the TC flag to
+   in-domain referral glue records, the server MUST set the TC flag to
    inform the client that the response is incomplete, and that the client
-   SHOULD use TCP to retrieve the full response.
+   SHOULD use another transport to retrieve the full response.
    This document updates RFC 1034 to clarify correct server behavior.
 
 {mainmatter}
@@ -92,9 +92,9 @@ coding = "utf-8"
    otherwise a resolver following the referral has no way of finding these
    addresses. Authoritative servers are expected to return all available
    in-domain referral glue records in a referral response. If message size constraints prevent the
-   inclusion of all in-domain glue records over UDP transport, the server MUST set the
+   inclusion of all in-domain glue records over the chosen transport, the server MUST set the
    TC (Truncated) flag to inform the client that the response is incomplete,
-   and that the client SHOULD use TCP to retrieve the full response. This
+   and that the client SHOULD use another transport retrieve the full response. This
    document clarifies that expectation.
 
    DNS responses sometimes contain optional data in the additional
@@ -295,15 +295,14 @@ coding = "utf-8"
 ## In-Domain Referral Glue
 
    This document clarifies that when a name server generates a referral
-   response over UDP transport, it MUST include all available in-domain glue records in the
-   additional section, or MUST set TC=1. When a name server generates
-   a referral response over TCP transport, it MUST include all available in-domain glue records.
+   response, it MUST include all available in-domain glue records in the
+   additional section, or MUST set TC=1 if constrained by message size.
 
 ## Sibling Referral Glue
 
    This document clarifies that when a name server generates a referral
    response, it SHOULD include all available glue records in the
-   additional section.  If after adding all in-domain glue records, not all sibling glue records fit in a response over UDP transport,
+   additional section.  If after adding all in-domain glue records, not all sibling glue records fit due to size message constraints,
    the name server is NOT REQUIRED to set TC=1.
 
    Note that users may experience resolution failures for domains with only sibling glue
@@ -389,6 +388,7 @@ coding = "utf-8"
   - Added Operational Considerations section.
   - Note many current implementations set TC=1 only when no glue RRs fit.  New requirements may lead to more truncation and TCP.
   - Sibling glue can be optional.  Only require TC=1 when all in-domain glue RRs don't fit.
+  - Avoid talking about requirements for UDP/TCP specifically, and talk more generically about message size constraints regardless of transport.
 
 {backmatter}
 
