@@ -252,12 +252,12 @@ coding = "utf-8"
    The example below is based on a response observed in June 2020.  The names have
    been altered to fall under documentation domains.  It shows a case where none of
    the glue records present in the zone fit into the available space of the UDP respose, and
-   TC=1 was not set.  While this example shows a referral with DNSSEC records
+   the TC flag was not set.  While this example shows a referral with DNSSEC records
    [@RFC4033], [@RFC4034], [@RFC4035], this behaviour has
    been seen with plain DNS responses as well.  Some records have
    been truncated for display purposes. Note that at the time of this
    writing, the servers originally responsible for this example have been updated and now correctly
-   set the TC=1 flag.
+   set the TC flag.
 
 ~~~
    % dig +norec +dnssec +bufsize=512 +ignore @ns.example.net \
