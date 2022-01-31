@@ -290,6 +290,8 @@ coding = "utf-8"
 
 # Requirements
 
+   This section describes updated requirements for including glue in referral responses.
+
 ## In-Domain Referral Glue
 
    This document clarifies that when a name server generates a referral
