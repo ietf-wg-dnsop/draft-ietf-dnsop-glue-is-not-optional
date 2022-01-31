@@ -251,9 +251,9 @@ coding = "utf-8"
 
    The example below is based on a response observed in June 2020.  The names have
    been altered to fall under documentation domains.  It shows a case where none of
-   the glue records present in the zone fit into the available space of the UDP respose, and
+   the glue records present in the zone fit into the available space of the UDP response, and
    the TC flag was not set.  While this example shows a referral with DNSSEC records
-   [@RFC4033], [@RFC4034], [@RFC4035], this behaviour has
+   [@RFC4033], [@RFC4034], [@RFC4035], this behavior has
    been seen with plain DNS responses as well.  Some records have
    been truncated for display purposes. Note that at the time of this
    writing, the servers originally responsible for this example have been updated and now correctly
@@ -306,7 +306,7 @@ coding = "utf-8"
    additional section.  If after adding all in-domain glue records, not all sibling glue records fit in a response over UDP transport,
    the name server is NOT REQUIRED to set TC=1.
 
-   Note that users may experience resolution failures for domains with only sibing glue
+   Note that users may experience resolution failures for domains with only sibling glue
    when a name servers chooses to omit them in a referral response.  As described in 
    (#siblingcyclicglue), such domains are rare.
 
@@ -329,7 +329,7 @@ coding = "utf-8"
 
 #  Security Considerations
 
-   This document clarifies correct DNS server behaviour and does not introduce
+   This document clarifies correct DNS server behavior and does not introduce
    any changes or new security considerations.
 
 #  Operational Considerations

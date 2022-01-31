@@ -286,9 +286,9 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
    The example below is based on a response observed in June 2020.  The
    names have been altered to fall under documentation domains.  It
    shows a case where none of the glue records present in the zone fit
-   into the available space of the UDP respose, and the TC flag was not
+   into the available space of the UDP response, and the TC flag was not
    set.  While this example shows a referral with DNSSEC records
-   [RFC4033], [RFC4034], [RFC4035], this behaviour has been seen with
+   [RFC4033], [RFC4034], [RFC4035], this behavior has been seen with
    plain DNS responses as well.  Some records have been truncated for
    display purposes.  Note that at the time of this writing, the servers
    originally responsible for this example have been updated and now
@@ -356,7 +356,7 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
    name server is NOT REQUIRED to set TC=1.
 
    Note that users may experience resolution failures for domains with
-   only sibing glue when a name servers chooses to omit them in a
+   only sibling glue when a name servers chooses to omit them in a
    referral response.  As described in Section 2.3, such domains are
    rare.
 
@@ -379,7 +379,7 @@ Internet-Draft       DNS Referral Glue Requirements         January 2022
 
 4.  Security Considerations
 
-   This document clarifies correct DNS server behaviour and does not
+   This document clarifies correct DNS server behavior and does not
    introduce any changes or new security considerations.
 
 
