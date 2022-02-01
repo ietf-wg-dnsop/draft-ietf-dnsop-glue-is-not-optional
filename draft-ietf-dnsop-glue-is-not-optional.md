@@ -298,6 +298,12 @@ coding = "utf-8"
    response, it MUST include all available in-domain glue records in the
    additional section, or MUST set TC=1 if constrained by message size.
 
+   At the time of writing, most iterative clients send initial queries
+   over UDP and retry over TCP upon receiving a response with the TC
+   flag set.  UDP responses are generally limited to between 1232 and 4096
+   bytes, due to values commonly used for the EDNS0 UDP Message Size field
+   [@RFC6891], [@FLAGDAY2020].  TCP responses are limited to 65,536 bytes.
+
 ## Sibling Referral Glue
 
    This document clarifies that when a name server generates a referral
@@ -404,3 +410,12 @@ coding = "utf-8"
    </front>
 </reference>
 
+<reference anchor="FLAGDAY2020" target="https://dnsflagday.net/2020/">
+   <front>
+     <title>DNS Flag Day 2020</title>
+     <author>
+       <organization>Various DNS software and service providers</organization>
+     </author>
+     <date year="2020" month="Oct"/>
+   </front>
+</reference>
