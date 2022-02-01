@@ -244,8 +244,8 @@ coding = "utf-8"
 
 ## Missing Referral Glue
 
-   An example of missing glue is included here, even though it is not
-   really a type of glue.  While not common, real examples of responses
+   An example of missing glue is included here, even though it can not be considered
+   as a type of glue.  While not common, real examples of responses
    that lack required glue, and with TC=0, have been shown to occur and
    cause resolution failures.
 
