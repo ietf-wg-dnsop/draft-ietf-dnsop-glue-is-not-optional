@@ -302,7 +302,7 @@ coding = "utf-8"
 
    This document clarifies that when a name server generates a referral
    response, it SHOULD include all available glue records in the
-   additional section.  If after adding all in-domain glue records, not all sibling glue records fit due to size message constraints,
+   additional section.  If after adding all in-domain glue records, not all sibling glue records fit due to message size constraints,
    the name server is NOT REQUIRED to set TC=1.
 
    Note that users may experience resolution failures for domains with only sibling glue
