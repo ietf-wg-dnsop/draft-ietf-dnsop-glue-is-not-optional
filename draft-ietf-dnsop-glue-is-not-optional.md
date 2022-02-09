@@ -302,7 +302,7 @@ coding = "utf-8"
    over UDP and retry over TCP upon receiving a response with the TC
    flag set.  UDP responses are generally limited to between 1232 and 4096
    bytes, due to values commonly used for the EDNS0 UDP Message Size field
-   [@RFC6891], [@FLAGDAY2020].  TCP responses are limited to 65,536 bytes.
+   [@RFC6891], [@FLAGDAY2020].  TCP responses are limited to 65,535 bytes.
 
 ## Sibling Referral Glue
 
@@ -358,6 +358,7 @@ coding = "utf-8"
    Geoff Huston,
    Jared Mauch,
    George Michaelson,
+   Yasuhiro Orange Morishita,
    Benno Overeinder,
    John R Levine,
    Shinta Sato,
