@@ -1,5 +1,5 @@
 %%%
-title = "DNS Glue Requirements"
+title = "DNS Glue Requirements in Referral Responses"
 docName = "@DOCNAME@"
 category = "std"
 updates = [1034]
