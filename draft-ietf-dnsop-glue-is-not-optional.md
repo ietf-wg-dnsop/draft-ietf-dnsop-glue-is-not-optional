@@ -72,7 +72,7 @@ coding = "utf-8"
 .# Abstract
 
    The DNS uses glue records to allow iterative clients to find the
-   addresses of nameservers that are contained within a delegated zone.
+   addresses of name servers that are contained within a delegated zone.
    Authoritative Servers are expected to return all available in-domain glue records
    in a referral response. If message size constraints prevent the inclusion of all
    in-domain glue records, the server MUST set the TC flag to
@@ -86,7 +86,7 @@ coding = "utf-8"
 # Introduction
 
    The Domain Name System (DNS) [@!RFC1034], [@!RFC1035] uses glue records
-   to allow iterative clients to find the addresses of nameservers that are
+   to allow iterative clients to find the addresses of name servers that are
    contained within a delegated zone. Glue records are added to the parent
    zone as part of the delegation process and returned in referral responses,
    otherwise a resolver following the referral has no way of finding these
@@ -116,17 +116,17 @@ coding = "utf-8"
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in [@!RFC2119].
 
-# Types of Glue
+# Types of Glue in Referral Responses
 
    This section describes different types of glue that may be found in
    DNS referral responses.  Note that the type of glue depends on 
    the QNAME.  A particular record can be in-domain glue for one response
    and sibling glue for another.
 
-## In-Domain Glue {#indomainglue}
+## Glue for In-Domain Name Servers {#indomainglue}
 
    The following is a simple example of glue records present in the
-   delegating zone "test" for the child zone "foo.test". The nameservers
+   delegating zone "test" for the child zone "foo.test". The name servers
    for foo.test (ns1.foo.test and ns2.foo.test) are both below the
    delegation point. They are configured as glue records in the "test" zone:
 
@@ -137,8 +137,8 @@ coding = "utf-8"
    ns2.foo.test.              86400   IN AAAA    2001:db8::2:2
 ~~~
 
-   A referral response from "test" for "foo.test" with in-domain
-   glue looks like this:
+   A referral response from "test" for "foo.test" with glue for in-domain
+   name servers looks like this:
 
 ~~~
    ;; QUESTION SECTION:
@@ -153,14 +153,14 @@ coding = "utf-8"
    ns2.foo.test.           86400	IN	AAAA	2001:db8::2:2
 ~~~
 
-##  Sibling Glue {#siblingglue}
+##  Glue for Sibling Domain Name Servers {#siblingglue}
 
-   Sibling glue are glue records that are not contained in the delegated
+   Sibling domain name servers are NS records that are not contained in the delegated
    zone itself, but in another zone delegated from the same parent. In many
-   cases, these are not strictly required for resolution, since the resolver
-   can make follow-on queries to the other zone to resolve the nameserver
-   addresses after following the referral to the sibling zone. However,
-   most nameserver implementations today provide them as an optimization
+   cases, glue for sibling domain name servers are not strictly required for resolution, since the resolver
+   can make follow-on queries to the sibling zone to resolve the name server
+   addresses (after following the referral to the sibling zone). However,
+   most name server implementations today provide them as an optimization
    to obviate the need for extra traffic from iterative resolvers.
 
    Here the delegating zone "test" contains two delegations for the
@@ -176,7 +176,7 @@ coding = "utf-8"
    foo.test.                  86400   IN NS      ns2.bar.test.
 ~~~
 
-  A referral response from "test" for "foo.test" with sibling glue
+  A referral response from "test" for "foo.test" with glue for sibling domain name servers
   looks like this:
 
 ~~~
@@ -192,13 +192,13 @@ coding = "utf-8"
    ns2.bar.test.           86400	IN	AAAA	2001:db8::2:2
 ~~~
 
-##  Cyclic Sibling Glue {#siblingcyclicglue}
+##  Glue for Cyclic Sibling Domain Name Servers {#siblingcyclicglue}
 
-   The use of sibling glue can introduce cyclic dependencies.  This
+   The use of sibling domain name servers can introduce cyclic dependencies.  This
    happens when one domain specifies name servers from a sibling domain,
    and vice versa.  This type of cyclic dependency can only be
-   broken when the delegating name server includes the sibling
-   glue in a referral response.
+   broken when the delegating name server includes glue for the sibling
+   domain in a referral response.
 
    Here the delegating zone "test" contains two delegations for the
    child zones "bar.test" and "foo.test", and each use name servers under
@@ -216,7 +216,7 @@ coding = "utf-8"
    ns2.foo.test.              86400   IN AAAA    2001:db8::2:4
 ~~~
 
-  A referral response from "test" for "bar.test" with sibling glue
+  A referral response from "test" for "bar.test" with glue for sibling domain name servers
   looks like this:
 
 ~~~
@@ -234,7 +234,7 @@ coding = "utf-8"
 
    In late 2021 the authors analyzed zone file data available from ICANN's
    Centralized Zone Data Service [@CZDS] and found 222 out of approximately
-   209,000,000 total delegations that had only sibling NS RRs in a cyclic
+   209,000,000 total delegations that had only sibling domain NS RRs in a cyclic
    dependency as above.
 
 ## Missing Glue
@@ -285,12 +285,12 @@ coding = "utf-8"
 
 # Requirements
 
-   This section describes updated requirements for including glue in referral responses.
+   This section describes updated requirements for including glue in DNS referral responses.
 
-## In-Domain Glue
+## Glue for In-Domain Name Servers
 
    This document clarifies that when a name server generates a referral
-   response, it MUST include all available in-domain glue records in the
+   response, it MUST include all available glue records for in-domain name servers in the
    additional section, or MUST set TC=1 if constrained by message size.
 
    At the time of writing, most iterative clients send initial queries
@@ -299,15 +299,15 @@ coding = "utf-8"
    bytes, due to values commonly used for the EDNS0 UDP Message Size field
    [@RFC6891], [@FLAGDAY2020].  TCP responses are limited to 65,535 bytes.
 
-## Sibling Glue
+## Glue for Sibling Domain Name Servers
 
    This document clarifies that when a name server generates a referral
    response, it SHOULD include all available glue records in the
-   additional section.  If after adding all in-domain glue records, not all sibling glue records fit due to message size constraints,
+   additional section.  If, after adding glue for all in-domain name servers, the glue for all sibling domain name servers does not fit due to message size constraints,
    the name server is NOT REQUIRED to set TC=1.
 
-   Note that users may experience resolution failures for domains with only sibling glue
-   when a name servers chooses to omit them in a referral response.  As described in 
+   Note that users may experience resolution failures for domains with cyclically-dependent sibling name servers
+   when the delegating name server chooses to omit the corresponding glue in a referral response.  As described in 
    (#siblingcyclicglue), such domains are rare.
 
 ## Updates to RFC 1034
@@ -324,7 +324,7 @@ coding = "utf-8"
    "Copy the NS RRs for the subzone into the authority section of the
    reply.  Put whatever NS addresses are available into the additional
    section, using glue RRs if the addresses are not available from
-   authoritative data or the cache.  If all in-domain glue RRs do not fit, set TC=1 in
+   authoritative data or the cache.  If all glue RRs for in-domain name servers do not fit, set TC=1 in
    the header.  Go to step 4."
 
 #  Security Considerations
@@ -395,6 +395,8 @@ coding = "utf-8"
   From -04 to -05:
 
   - Reverting the -04 change to use the phrase "referral glue".
+  - Rephrase "in-domain glue" as "glue for in-domain name servers".
+  - Rephrase "sibling glue" as "glue for sibling domain name servers".
 
 {backmatter}
 
