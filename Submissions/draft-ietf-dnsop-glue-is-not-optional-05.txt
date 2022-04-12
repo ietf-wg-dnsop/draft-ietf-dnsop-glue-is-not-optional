@@ -1,4 +1,3 @@
-```
 
 
 
@@ -615,4 +614,3 @@ Internet-Draft DNS Glue Requirements in Referral Responses    April 2022
 
 
 Andrews, et al.          Expires 14 October 2022               [Page 11]
-```
