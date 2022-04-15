@@ -107,8 +107,16 @@ coding = "utf-8"
    glue defined for the DNS.
 
    Note that this document only clarifies requirements of name server
-   software implementations.  It does not change any requirements on
+   software implementations.  It does not introduce or change any requirements on
    data placed in DNS zones or registries.
+   In other words, this document only makes requirements on "available
+   glue records" (i.e., those given in a zone), but does not make
+   requirements regarding thier presence in a zone.
+   If some glue records are absent from a given zone, an authoritative
+   name server may be unable to return a useful referral response for
+   the corresponding domain.  The IETF may want to consider a separate
+   update to the requirements for including glue in zone data, beyond
+   those given in [@!RFC1034] and [@!RFC1035].
 
 ## Reserved Words
 
