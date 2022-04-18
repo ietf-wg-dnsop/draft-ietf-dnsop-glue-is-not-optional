@@ -111,7 +111,7 @@ coding = "utf-8"
    data placed in DNS zones or registries.
    In other words, this document only makes requirements on "available
    glue records" (i.e., those given in a zone), but does not make
-   requirements regarding thier presence in a zone.
+   requirements regarding their presence in a zone.
    If some glue records are absent from a given zone, an authoritative
    name server may be unable to return a useful referral response for
    the corresponding domain.  The IETF may want to consider a separate
