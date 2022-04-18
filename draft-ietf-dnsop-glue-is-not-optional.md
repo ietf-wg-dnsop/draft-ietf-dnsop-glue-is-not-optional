@@ -410,6 +410,7 @@ coding = "utf-8"
   - Reverting the -04 change to use the phrase "referral glue".
   - Rephrase "in-domain glue" as "glue for in-domain name servers".
   - Rephrase "sibling glue" as "glue for sibling domain name servers".
+  - Expand paragraph noting this document does not make requirements about presence of glue in zones.
 
 {backmatter}
 
