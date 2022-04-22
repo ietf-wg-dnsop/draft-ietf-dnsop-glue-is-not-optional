@@ -11,7 +11,7 @@ keyword = [""]
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "draft-ietf-dnsop-glue-is-not-optional-05"
+value = "draft-ietf-dnsop-glue-is-not-optional-06"
 stream = "IETF"
 status = "standard"
 
