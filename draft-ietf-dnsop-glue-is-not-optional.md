@@ -73,9 +73,9 @@ coding = "utf-8"
 
    The DNS uses glue records to allow iterative clients to find the
    addresses of name servers that are contained within a delegated zone.
-   Authoritative Servers are expected to return all available in-domain glue records
+   Authoritative Servers are expected to return all available glue records for in-domain name servers
    in a referral response. If message size constraints prevent the inclusion of all
-   in-domain glue records, the server MUST set the TC flag to
+   glue records for in-domain name servers, the server MUST set the TC flag to
    inform the client that the response is incomplete, and that the client
    SHOULD use another transport to retrieve the full response.
    This document updates RFC 1034 to clarify correct server behavior.
@@ -91,8 +91,8 @@ coding = "utf-8"
    zone as part of the delegation process and returned in referral responses,
    otherwise a resolver following the referral has no way of finding these
    addresses. Authoritative servers are expected to return all available
-   in-domain glue records in a referral response. If message size constraints prevent the
-   inclusion of all in-domain glue records over the chosen transport, the server MUST set the
+   glue records for in-domain name servers in a referral response. If message size constraints prevent the
+   inclusion of all glue records for in-domain name servers over the chosen transport, the server MUST set the
    TC (Truncated) flag to inform the client that the response is incomplete,
    and that the client SHOULD use another transport retrieve the full response. This
    document clarifies that expectation.
@@ -128,8 +128,8 @@ coding = "utf-8"
 
    This section describes different types of glue that may be found in
    DNS referral responses.  Note that the type of glue depends on 
-   the QNAME.  A particular record can be in-domain glue for one response
-   and sibling glue for another.
+   the QNAME.  A particular name server (and its corresponding glue record) can be in-domain for one response
+   and in a sibling domain for another.
 
 ## Glue for In-Domain Name Servers {#indomainglue}
 
@@ -411,6 +411,10 @@ coding = "utf-8"
   - Rephrase "in-domain glue" as "glue for in-domain name servers".
   - Rephrase "sibling glue" as "glue for sibling domain name servers".
   - Expand paragraph noting this document does not make requirements about presence of glue in zones.
+
+  From -05 to -06:
+
+  - More instances of rephrasing "in-domain glue" as "glue for in-domain name servers" (and for sibling glue).
 
 {backmatter}
 
