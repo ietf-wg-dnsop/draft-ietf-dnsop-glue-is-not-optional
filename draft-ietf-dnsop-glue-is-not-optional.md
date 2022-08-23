@@ -347,7 +347,7 @@ coding = "utf-8"
    glue records fit in a response over UDP transport.  The updated
    requirements in this document might lead to an increase in the fraction
    of UDP responses with the TC flag set, and consequently an increase
-   in the number of queries to over TCP transport.
+   in the number of queries received over TCP transport.
 
 #   IANA Considerations
 
