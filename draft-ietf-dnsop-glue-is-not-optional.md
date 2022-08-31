@@ -121,8 +121,10 @@ coding = "utf-8"
 ## Reserved Words
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-   document are to be interpreted as described in [@!RFC2119].
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY",
+   and "OPTIONAL" in this document are to be interpreted as described
+   in BCP 14 [@!RFC2119] [@!RFC8174] when, and only when, they
+   appear in all capitals, as shown here.
 
 # Types of Glue in Referral Responses
 
@@ -312,7 +314,7 @@ coding = "utf-8"
    This document clarifies that when a name server generates a referral
    response, it SHOULD include all available glue records in the
    additional section.  If, after adding glue for all in-domain name servers, the glue for all sibling domain name servers does not fit due to message size constraints,
-   the name server is NOT REQUIRED to set TC=1.
+   the name server MAY set TC=1 but is not obligated to do so.
 
    Note that users may experience resolution failures for domains with cyclically-dependent sibling name servers
    when the delegating name server chooses to omit the corresponding glue in a referral response.  As described in 
