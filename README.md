@@ -7,15 +7,15 @@ DNSOP                                                         M. Andrews
 Internet-Draft                                                       ISC
 Updates: 1034 (if approved)                                     S. Huque
 Intended status: Standards Track                              Salesforce
-Expires: 26 February 2023                                     P. Wouters
+Expires: 4 March 2023                                         P. Wouters
                                                                    Aiven
                                                               D. Wessels
                                                                 Verisign
-                                                          25 August 2022
+                                                          31 August 2022
 
 
               DNS Glue Requirements in Referral Responses
-                draft-ietf-dnsop-glue-is-not-optional-06
+                draft-ietf-dnsop-glue-is-not-optional-07
 
 Abstract
 
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 February 2023.
+   This Internet-Draft will expire on 4 March 2023.
 
 Copyright Notice
 
@@ -54,9 +54,9 @@ Copyright Notice
 
 
 
-Andrews, et al.         Expires 26 February 2023                [Page 1]
+Andrews, et al.           Expires 4 March 2023                  [Page 1]
 
-Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -110,9 +110,9 @@ Table of Contents
 
 
 
-Andrews, et al.         Expires 26 February 2023                [Page 2]
+Andrews, et al.           Expires 4 March 2023                  [Page 2]
 
-Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
    DNS responses sometimes contain optional data in the additional
@@ -139,8 +139,10 @@ Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
 1.1.  Reserved Words
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-   document are to be interpreted as described in [RFC2119].
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
 
 2.  Types of Glue in Referral Responses
 
@@ -158,18 +160,21 @@ Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
    the delegation point.  They are configured as glue records in the
    "test" zone:
 
+
+
+
+
+
+
+Andrews, et al.           Expires 4 March 2023                  [Page 3]
+
+Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
+
+
       foo.test.                  86400   IN NS      ns1.foo.test.
       foo.test.                  86400   IN NS      ns2.foo.test.
       ns1.foo.test.              86400   IN A       192.0.2.1
       ns2.foo.test.              86400   IN AAAA    2001:db8::2:2
-
-
-
-
-Andrews, et al.         Expires 26 February 2023                [Page 3]
-
-Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
-
 
    A referral response from "test" for "foo.test" with glue for in-
    domain name servers looks like this:
@@ -217,14 +222,9 @@ Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
 
 
 
-
-
-
-
-
-Andrews, et al.         Expires 26 February 2023                [Page 4]
+Andrews, et al.           Expires 4 March 2023                  [Page 4]
 
-Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
       ;; QUESTION SECTION:
@@ -278,9 +278,9 @@ Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
 
 
 
-Andrews, et al.         Expires 26 February 2023                [Page 5]
+Andrews, et al.           Expires 4 March 2023                  [Page 5]
 
-Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
    In late 2021 the authors analyzed zone file data available from
@@ -334,9 +334,9 @@ Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
 
 
 
-Andrews, et al.         Expires 26 February 2023                [Page 6]
+Andrews, et al.           Expires 4 March 2023                  [Page 6]
 
-Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
       % dig +norec +dnssec +bufsize=512 +ignore @ns.example.net \
@@ -390,9 +390,9 @@ Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
 
 
 
-Andrews, et al.         Expires 26 February 2023                [Page 7]
+Andrews, et al.           Expires 4 March 2023                  [Page 7]
 
-Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
 3.2.  Glue for Sibling Domain Name Servers
@@ -401,8 +401,8 @@ Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
    response, it SHOULD include all available glue records in the
    additional section.  If, after adding glue for all in-domain name
    servers, the glue for all sibling domain name servers does not fit
-   due to message size constraints, the name server is NOT REQUIRED to
-   set TC=1.
+   due to message size constraints, the name server MAY set TC=1 but is
+   not obligated to do so.
 
    Note that users may experience resolution failures for domains with
    cyclically-dependent sibling name servers when the delegating name
@@ -446,9 +446,9 @@ Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
 
 
 
-Andrews, et al.         Expires 26 February 2023                [Page 8]
+Andrews, et al.           Expires 4 March 2023                  [Page 8]
 
-Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
 6.  IANA Considerations
@@ -502,9 +502,9 @@ Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
 
 
 
-Andrews, et al.         Expires 26 February 2023                [Page 9]
+Andrews, et al.           Expires 4 March 2023                  [Page 9]
 
-Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
    *  Note many current implementations set TC=1 only when no glue RRs
@@ -535,11 +535,11 @@ Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
 
 9.  Normative References
 
-   [RFC1034]  Mockapetris, P V., "Domain names - concepts and
-              facilities", STD 13, RFC 1034, DOI 10.17487/RFC1034,
-              November 1987, <https://www.rfc-editor.org/info/rfc1034>.
+   [RFC1034]  Mockapetris, P., "Domain names - concepts and facilities",
+              STD 13, RFC 1034, DOI 10.17487/RFC1034, November 1987,
+              <https://www.rfc-editor.org/info/rfc1034>.
 
-   [RFC1035]  Mockapetris, P V., "Domain names - implementation and
+   [RFC1035]  Mockapetris, P., "Domain names - implementation and
               specification", STD 13, RFC 1035, DOI 10.17487/RFC1035,
               November 1987, <https://www.rfc-editor.org/info/rfc1035>.
 
@@ -548,21 +548,25 @@ Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
 10.  Informative References
+
+
+
+
+
+Andrews, et al.           Expires 4 March 2023                 [Page 10]
+
+Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
+
 
    [CZDS]     ICANN, "Centralized Zone Data Service", January 2022,
               <https://czds.icann.org/>.
 
    [FLAGDAY2020]
-
-
-
-
-Andrews, et al.         Expires 26 February 2023               [Page 10]
-
-Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
-
-
               Various DNS software and service providers, "DNS Flag Day
               2020", October 2020, <https://dnsflagday.net/2020/>.
 
@@ -609,16 +613,13 @@ Authors' Addresses
    Email: shuque@gmail.com
 
 
-   Paul Wouters
 
-
-
-
-Andrews, et al.         Expires 26 February 2023               [Page 11]
+Andrews, et al.           Expires 4 March 2023                 [Page 11]
 
-Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
+   Paul Wouters
    Aiven
 
    Email: paul.wouters@aiven.io
@@ -669,6 +670,5 @@ Internet-Draft DNS Glue Requirements in Referral Responses   August 2022
 
 
 
-
-Andrews, et al.         Expires 26 February 2023               [Page 12]
+Andrews, et al.           Expires 4 March 2023                 [Page 12]
 ```
