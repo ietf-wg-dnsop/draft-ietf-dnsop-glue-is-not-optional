@@ -7,11 +7,11 @@ DNSOP                                                         M. Andrews
 Internet-Draft                                                       ISC
 Updates: 1034 (if approved)                                     S. Huque
 Intended status: Standards Track                              Salesforce
-Expires: 4 March 2023                                         P. Wouters
+Expires: 31 March 2023                                        P. Wouters
                                                                    Aiven
                                                               D. Wessels
                                                                 Verisign
-                                                          31 August 2022
+                                                       27 September 2022
 
 
               DNS Glue Requirements in Referral Responses
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 March 2023.
+   This Internet-Draft will expire on 31 March 2023.
 
 Copyright Notice
 
@@ -54,9 +54,9 @@ Copyright Notice
 
 
 
-Andrews, et al.           Expires 4 March 2023                  [Page 1]
+Andrews, et al.           Expires 31 March 2023                 [Page 1]
 
-Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon  September 2022
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -110,9 +110,9 @@ Table of Contents
 
 
 
-Andrews, et al.           Expires 4 March 2023                  [Page 2]
+Andrews, et al.           Expires 31 March 2023                 [Page 2]
 
-Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon  September 2022
 
 
    DNS responses sometimes contain optional data in the additional
@@ -166,9 +166,9 @@ Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
 
-Andrews, et al.           Expires 4 March 2023                  [Page 3]
+Andrews, et al.           Expires 31 March 2023                 [Page 3]
 
-Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon  September 2022
 
 
       foo.test.                  86400   IN NS      ns1.foo.test.
@@ -222,9 +222,9 @@ Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
 
-Andrews, et al.           Expires 4 March 2023                  [Page 4]
+Andrews, et al.           Expires 31 March 2023                 [Page 4]
 
-Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon  September 2022
 
 
       ;; QUESTION SECTION:
@@ -278,9 +278,9 @@ Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
 
-Andrews, et al.           Expires 4 March 2023                  [Page 5]
+Andrews, et al.           Expires 31 March 2023                 [Page 5]
 
-Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon  September 2022
 
 
    In late 2021 the authors analyzed zone file data available from
@@ -334,9 +334,9 @@ Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
 
-Andrews, et al.           Expires 4 March 2023                  [Page 6]
+Andrews, et al.           Expires 31 March 2023                 [Page 6]
 
-Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon  September 2022
 
 
       % dig +norec +dnssec +bufsize=512 +ignore @ns.example.net \
@@ -390,9 +390,9 @@ Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
 
-Andrews, et al.           Expires 4 March 2023                  [Page 7]
+Andrews, et al.           Expires 31 March 2023                 [Page 7]
 
-Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon  September 2022
 
 
 3.2.  Glue for Sibling Domain Name Servers
@@ -446,9 +446,9 @@ Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
 
-Andrews, et al.           Expires 4 March 2023                  [Page 8]
+Andrews, et al.           Expires 31 March 2023                 [Page 8]
 
-Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon  September 2022
 
 
 6.  IANA Considerations
@@ -502,9 +502,9 @@ Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
 
-Andrews, et al.           Expires 4 March 2023                  [Page 9]
+Andrews, et al.           Expires 31 March 2023                 [Page 9]
 
-Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon  September 2022
 
 
    *  Note many current implementations set TC=1 only when no glue RRs
@@ -558,9 +558,9 @@ Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
 
-Andrews, et al.           Expires 4 March 2023                 [Page 10]
+Andrews, et al.           Expires 31 March 2023                [Page 10]
 
-Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon  September 2022
 
 
    [CZDS]     ICANN, "Centralized Zone Data Service", January 2022,
@@ -614,9 +614,9 @@ Authors' Addresses
 
 
 
-Andrews, et al.           Expires 4 March 2023                 [Page 11]
+Andrews, et al.           Expires 31 March 2023                [Page 11]
 
-Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
+Internet-Draft  DNS Glue Requirements in Referral Respon  September 2022
 
 
    Paul Wouters
@@ -670,5 +670,5 @@ Internet-Draft  DNS Glue Requirements in Referral Respon     August 2022
 
 
 
-Andrews, et al.           Expires 4 March 2023                 [Page 12]
+Andrews, et al.           Expires 31 March 2023                [Page 12]
 ```
