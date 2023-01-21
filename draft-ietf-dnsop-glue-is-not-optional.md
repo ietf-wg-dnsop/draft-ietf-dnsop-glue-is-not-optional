@@ -94,7 +94,7 @@ coding = "utf-8"
    glue records for in-domain name servers in a referral response. If message size constraints prevent the
    inclusion of all glue records for in-domain name servers over the chosen transport, the server MUST set the
    TC (Truncated) flag to inform the client that the response is incomplete,
-   and that the client SHOULD use another transport retrieve the full response. This
+   and that the client SHOULD use another transport to retrieve the full response. This
    document clarifies that expectation.
 
    DNS responses sometimes contain optional data in the additional
