@@ -100,7 +100,7 @@ coding = "utf-8"
    DNS responses sometimes contain optional data in the additional
    section. In-domain glue records, however, are not optional. Several other
    protocol extensions, when used, are also not optional. This
-   includes TSIG [@RFC2845], OPT [@RFC6891], and SIG(0) [@RFC2931].
+   includes TSIG [@RFC8945], OPT [@RFC6891], and SIG(0) [@RFC2931].
 
    At the time of this writing, addresses (A or AAAA records) for 
    a delegation's authoritative name servers are the only type of
