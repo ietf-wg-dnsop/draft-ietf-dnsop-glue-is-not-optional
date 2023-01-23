@@ -337,6 +337,16 @@ coding = "utf-8"
    authoritative data or the cache.  If all glue RRs for in-domain name servers do not fit, set TC=1 in
    the header.  Go to step 4."
 
+## Summary Table
+
+The following table summarizes the requirements for including glue in DNS referral responses.
+
+| Origin       | NS Owner Name  |  Name Server (NSDNAME) | Type           | Include Glue |
+|--------------|----------------|------------------------|----------------|--------------|
+| test         | foo.test       | ns1.foo.test           | in-domain      | MUST         |
+| test         | foo.test       | ns2.bar.test           | sibling domain | SHOULD       |
+| test         | foo.test       | ns3.example.com        | unrelated      | SHOULD NOT   |
+
 #  Security Considerations
 
    This document clarifies correct DNS server behavior and does not introduce
