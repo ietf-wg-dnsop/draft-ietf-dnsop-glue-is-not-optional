@@ -2,7 +2,7 @@
 # built using mmark 2.
 # on fedora: sudo dnf install golang-github-mmarkdown-mmark
 
-VERSION = 07
+VERSION = 08
 DOCNAME = draft-ietf-dnsop-glue-is-not-optional
 
 OUTDIR=adopted-draft-$(VERSION)
