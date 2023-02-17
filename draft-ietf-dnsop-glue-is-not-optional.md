@@ -345,7 +345,6 @@ The following table summarizes the requirements for including glue in DNS referr
 |--------------|----------------|------------------------|----------------|--------------|
 | test         | foo.test       | ns1.foo.test           | in-domain      | MUST         |
 | test         | foo.test       | ns2.bar.test           | sibling domain | SHOULD       |
-| test         | foo.test       | ns3.example.com        | unrelated      | SHOULD NOT   |
 
 #  Security Considerations
 
