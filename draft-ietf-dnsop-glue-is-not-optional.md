@@ -418,6 +418,14 @@ coding = "utf-8"
 
   - More instances of rephrasing "in-domain glue" as "glue for in-domain name servers" (and for sibling glue).
 
+  From -06 to -07:
+
+  - Change "NOT REQUIRED to set TC=1" to "MAY set TC=1 but is not obligated to do so."
+
+  From -07 to -08:
+
+  - Update TSIG reference to RFC8945.
+
 {backmatter}
 
 {numbered="false"}
