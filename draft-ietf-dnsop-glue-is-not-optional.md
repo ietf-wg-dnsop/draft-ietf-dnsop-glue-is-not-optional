@@ -120,7 +120,7 @@ coding = "utf-8"
 
    This document assumes a reasonable level of familiarity with DNS
    operations and protocol terms.  Much of the terminology is explained
-   in further detail in "DNS Terminology" [@!RFC8499].
+   in further detail in "DNS Terminology" [@RFC8499].
 
 ## Reserved Words
 
