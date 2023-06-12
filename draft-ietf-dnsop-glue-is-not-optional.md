@@ -1,4 +1,4 @@
-%%
+%%%
 title = "DNS Glue Requirements in Referral Responses"
 docName = "@DOCNAME@"
 category = "std"
