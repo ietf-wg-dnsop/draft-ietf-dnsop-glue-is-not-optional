@@ -1,4 +1,4 @@
-%%%
+%%
 title = "DNS Glue Requirements in Referral Responses"
 docName = "@DOCNAME@"
 category = "std"
@@ -117,6 +117,10 @@ coding = "utf-8"
    the corresponding domain.  The IETF may want to consider a separate
    update to the requirements for including glue in zone data, beyond
    those given in [@!RFC1034] and [@!RFC1035].
+
+   This document assumes a reasonable level of familiarity with DNS
+   operations and protocol terms.  Much of the terminology is explained
+   in further detail in "DNS Terminology" [@!RFC8499].
 
 ## Reserved Words
 
