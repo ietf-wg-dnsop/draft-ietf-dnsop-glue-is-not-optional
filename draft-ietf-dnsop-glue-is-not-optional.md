@@ -430,6 +430,12 @@ coding = "utf-8"
 
   - Update TSIG reference to RFC8945.
 
+  From -08 to -09:
+
+  - Lowercase RFC2119 keywords in abstract
+  - Add informative reference to DNS terminology RFC
+  - Add informative reference to dig
+
 {backmatter}
 
 {numbered="false"}
