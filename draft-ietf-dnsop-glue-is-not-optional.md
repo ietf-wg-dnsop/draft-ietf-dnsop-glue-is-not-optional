@@ -258,7 +258,7 @@ coding = "utf-8"
    that lack required glue, and with TC=0, have been shown to occur and
    cause resolution failures.
 
-   The example below is based on a response observed in June 2020.  The names have
+   The example below, from the dig command [@DIG], is based on a response observed in June 2020.  The names have
    been altered to fall under documentation domains.  It shows a case where none of
    the glue records present in the zone fit into the available space of the UDP response, and
    the TC flag was not set.  While this example shows a referral with DNSSEC records
@@ -451,5 +451,15 @@ coding = "utf-8"
        <organization>Various DNS software and service providers</organization>
      </author>
      <date year="2020" month="Oct"/>
+   </front>
+</reference>
+
+<reference anchor="DIG" target="https://en.wikipedia.org/wiki/Dig_(command)">
+   <front>
+     <title>dig (command)</title>
+     <author>
+       <organization>Wikipedia</organization>
+     </author>
+     <date year="2023" month="June"/>
    </front>
 </reference>
