@@ -75,9 +75,9 @@ coding = "utf-8"
    addresses of name servers that are contained within a delegated zone.
    Authoritative Servers are expected to return all available glue records for in-domain name servers
    in a referral response. If message size constraints prevent the inclusion of all
-   glue records for in-domain name servers, the server MUST set the TC flag to
+   glue records for in-domain name servers, the server must set the TC flag to
    inform the client that the response is incomplete, and that the client
-   SHOULD use another transport to retrieve the full response.
+   should use another transport to retrieve the full response.
    This document updates RFC 1034 to clarify correct server behavior.
 
 {mainmatter}
